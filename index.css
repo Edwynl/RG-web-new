@@ -1,0 +1,956 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+:root {
+    /* Porsche Palette - Malachite Green Metallic Edition */
+    --color-chalk: #E1E1E1;
+    --color-chalk-light: #F5F5F5;
+    --color-malachite: #2B574F;
+    --color-malachite-metallic: #3D6A62;
+    --color-deep-sage: #1E312E;
+    --color-porsche-green: #13ec5b;
+    --color-porsche-green-glow: rgba(19, 236, 91, 0.4);
+    --color-guards-red: #D5001C;
+    --color-racing-yellow: #FDE100;
+    --color-titanium: #4A4A4A;
+
+    /* Glassmorphism Defaults */
+    --glass-bg: rgba(30, 49, 46, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-blur: 15px;
+
+    /* Spacing & Transitions */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--color-chalk);
+    color: var(--color-deep-sage);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Base Components */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.section-padding {
+    padding: 120px 0;
+}
+
+/* Text Stylings */
+h1,
+h2,
+h3 {
+    font-weight: 300;
+    letter-spacing: 0.05em;
+}
+
+.technical-mono {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--color-porsche-green);
+    opacity: 0.8;
+    margin-bottom: 25px;
+}
+
+/* Glassmorphism Utility */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.nav-pill {
+    text-decoration: none;
+    color: var(--color-deep-sage);
+    opacity: 0.85;
+    padding: 10px 24px;
+    border-radius: 99px;
+    /* iOS Liquid Glass - Pure Refraction */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.9), 0 4px 12px rgba(0, 0, 0, 0.02);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    display: inline-block;
+    font-weight: 500;
+}
+
+.nav-pill:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--color-porsche-green);
+    color: var(--color-porsche-green);
+    transform: scale(1.05) translateY(-1.5px);
+    box-shadow: inset 0 1px 5px rgba(255, 255, 255, 1), 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.btn-metallic {
+    padding: 14px 36px;
+    border-radius: 4px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    border: 1px solid var(--color-malachite);
+    background: linear-gradient(135deg, var(--color-malachite) 0%, var(--color-deep-sage) 100%);
+    color: white;
+    position: relative;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    outline: none;
+}
+
+.btn-metallic:hover {
+    box-shadow: 0 10px 30px var(--color-porsche-green-glow);
+    border-color: var(--color-porsche-green);
+    background: linear-gradient(135deg, var(--color-malachite-metallic) 0%, var(--color-malachite) 100%);
+}
+
+.accent-porsche-green {
+    color: var(--color-porsche-green);
+    text-shadow: 0 0 10px var(--color-porsche-green-glow);
+}
+
+.bg-malachite-depth {
+    background: linear-gradient(180deg, var(--color-deep-sage) 0%, #0a1211 100%);
+    color: white;
+}
+
+/* THE ENGINEERING VAULT (Luxury Grid) */
+.industries-vault {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: rgba(255, 255, 255, 0.05);
+    gap: 1px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.monolith {
+    background: var(--color-deep-sage);
+    padding: 100px 60px;
+    min-height: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: var(--transition-smooth);
+    position: relative;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.monolith:last-child {
+    border-right: none;
+}
+
+.monolith::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color-porsche-green);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    transform-origin: left;
+}
+
+.monolith:hover::after {
+    transform: scaleX(1);
+}
+
+/* POWER STAGES (Pillars) */
+.power-stages-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 60px;
+    padding-bottom: 20px;
+}
+
+.power-pillar {
+    flex: 1;
+    max-width: 280px;
+    background: linear-gradient(180deg, var(--color-malachite-metallic) 0%, var(--color-deep-sage) 100%);
+    border-radius: 8px 8px 0 0;
+    padding: 50px 30px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: var(--transition-smooth);
+}
+
+.power-pillar:hover {
+    transform: translateY(-10px);
+}
+
+.pillar-bronze {
+    height: 380px;
+}
+
+.pillar-silver {
+    height: 440px;
+}
+
+.pillar-gold {
+    height: 520px;
+    border-color: var(--color-porsche-green);
+    box-shadow: 0 0 50px var(--color-porsche-green-glow);
+}
+
+.pillar-platinum {
+    height: 600px;
+    background: linear-gradient(180deg, #4b7a71 0%, var(--color-deep-sage) 100%);
+}
+
+.emblem-badge {
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.plan-list {
+    list-style: none;
+    margin-top: 40px;
+}
+
+.plan-list li {
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    padding-left: 20px;
+    position: relative;
+}
+
+.plan-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-porsche-green);
+}
+
+/* Partners Strip - Tech Professional Aesthetic */
+.questionnaire-box {
+    position: relative;
+    overflow: hidden;
+    /* Maintain layout consistency if modified in HTML */
+}
+
+.questionnaire-box::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg,
+            transparent 45%,
+            rgba(255, 255, 255, 0.05) 50%,
+            rgba(255, 255, 255, 0.1) 52%,
+            rgba(255, 255, 255, 0.05) 54%,
+            transparent 60%);
+    transform: rotate(0deg);
+    animation: sweep-light 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes sweep-light {
+    0% {
+        transform: translate(-30%, -30%) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    40% {
+        transform: translate(30%, 30%) rotate(0deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(30%, 30%) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+.partners-strip {
+    background: #f8f9fa;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 30px 0;
+}
+
+.partners-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.partner-item {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-deep-sage);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.4;
+    transition: var(--transition-smooth);
+    cursor: default;
+}
+
+.partner-item:hover {
+    opacity: 1;
+    color: var(--color-porsche-green);
+}
+
+/* Leadership Team - 3D Spring Window Edition */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    margin-top: 80px;
+    perspective: 1200px;
+}
+
+.team-window {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 60px 30px;
+    text-align: center;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+
+.team-window:hover {
+    background: rgba(43, 87, 79, 0.2);
+    border-color: var(--color-porsche-green);
+    transform: translateZ(20px);
+    /* 移除了 rotateX */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 20px var(--color-porsche-green-glow);
+}
+
+.team-window:active {
+    animation: spring-bounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes spring-bounce {
+    0% {
+        transform: scale(1) translateZ(0);
+    }
+
+    30% {
+        transform: scale(0.92) translateZ(-50px);
+    }
+
+    60% {
+        transform: scale(1.05) translateZ(30px);
+    }
+
+    100% {
+        transform: scale(1) translateZ(0);
+    }
+}
+
+.member-avatar {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--color-malachite) 0%, var(--color-deep-sage) 100%);
+    border-radius: 50%;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-porsche-green);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.member-name {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.member-role {
+    color: var(--color-porsche-green);
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+/* HVAC System Topology Styles */
+.topology-vault {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 60px 0;
+    position: relative;
+}
+
+.device-node {
+    background: rgba(30, 49, 46, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: var(--transition-smooth);
+    z-index: 2;
+}
+
+.device-node:hover {
+    border-color: var(--color-porsche-green);
+    transform: translateY(-5px);
+}
+
+.flow-line-v {
+    width: 1px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.flow-line-v::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-porsche-green);
+    animation: flow-down 2s infinite linear;
+    opacity: 0.4;
+}
+
+@keyframes flow-down {
+    0% {
+        top: -100%;
+        height: 0;
+    }
+
+    50% {
+        top: 0;
+        height: 100%;
+    }
+
+    100% {
+        top: 100%;
+        height: 0;
+    }
+}
+
+.horizontal-bus {
+    width: 80%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+    margin: 20px 0;
+}
+
+/* Detailed Content Body */
+.content-body {
+    font-size: 0.95rem;
+    line-height: 2;
+    opacity: 0.7;
+    font-weight: 300;
+}
+
+.content-body strong {
+    color: var(--color-porsche-green);
+    font-weight: 400;
+}
+
+/* HVAC Schematic Logic - Porsche malachite Edition */
+.schematic-viewport {
+    background: #0d1a16;
+    /* 深黑绿背景，确保底色足够沉 */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 80px 40px;
+    margin-top: 60px;
+    backdrop-filter: blur(20px);
+    position: relative;
+    box-shadow: inset 0 0 40px rgba(19, 236, 91, 0.05);
+    min-height: 660px;
+    overflow-x: auto;
+    /* 开启横向滚动以防止移动端截断 */
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(19, 236, 91, 0.3) rgba(255, 255, 255, 0.05);
+}
+
+/* 自定义滚动条样式 (Webkit) */
+.schematic-viewport::-webkit-scrollbar {
+    height: 8px;
+}
+
+.schematic-viewport::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 4px;
+}
+
+.schematic-viewport::-webkit-scrollbar-thumb {
+    background: rgba(19, 236, 91, 0.3);
+    border-radius: 4px;
+}
+
+.schematic-viewport::-webkit-scrollbar-thumb:hover {
+    background: rgba(19, 236, 91, 0.6);
+}
+
+.schematic-svg {
+    width: 100%;
+    min-width: 1100px;
+    /* 保护 SVG 免受过度压缩，协同开启自适应滑动 */
+    height: auto;
+    display: block;
+}
+
+/* Pipe & Flow Logic */
+.pipe-line {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.05);
+    stroke-width: 6;
+    stroke-linecap: round;
+}
+
+.flow-core {
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 4, 12;
+    animation: flow-run 3s infinite linear;
+}
+
+.flow-cw {
+    stroke: #E5C07B;
+    /* Champagne Gold - 奢华温感 */
+}
+
+/* Condenser Water - Warm */
+.flow-chw {
+    stroke: #A7F3D0;
+    /* Ice Mint - 冰玉冷感 */
+}
+
+/* Chilled Water - Cool */
+.flow-sa {
+    stroke: var(--color-porsche-green);
+    /* Porsche Green Accent */
+}
+
+/* Supply Air - System Accent */
+
+@keyframes flow-run {
+    from {
+        stroke-dashoffset: 48;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* ============ Node Hierarchy ============ */
+.equip-node {
+    cursor: pointer;
+    transform-origin: center;
+    transform-box: fill-box;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.equip-node:active {
+    transform: scale(0.92);
+    transition: transform 0.1s ease-out;
+}
+
+.equip-node:hover .node-box {
+    stroke: var(--color-porsche-green);
+    fill: rgba(255, 255, 255, 0.15);
+}
+
+.node-box {
+    fill: rgba(255, 255, 255, 0.08);
+    /* 浅色半透明背景，使其亮起 */
+    stroke: rgba(19, 236, 91, 0.5);
+    /* 对比更强烈的保时捷绿边框 */
+    stroke-width: 1.5;
+    transition: var(--transition-smooth);
+}
+
+.equip-sub {
+    fill: rgba(255, 255, 255, 0.05);
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-width: 1;
+}
+
+/* ============ Typography & Labels ============ */
+.section-label {
+    font-weight: 800;
+    text-anchor: middle;
+    text-transform: uppercase;
+    fill: #ffffff;
+}
+
+.sub-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-anchor: middle;
+    letter-spacing: 0.04em;
+}
+
+.sub-label.cw-text {
+    fill: #fcd34d;
+    /* Yellow brighter */
+}
+
+.sub-label.chw-text {
+    fill: #A7F3D0;
+    /* Ice Mint brighter */
+}
+
+.equip-label {
+    font-size: 11px;
+    font-weight: 600;
+    fill: #ffffff;
+    text-anchor: middle;
+}
+
+.equip-label-lg {
+    font-size: 12px;
+    font-weight: 700;
+    fill: #ffffff;
+    text-anchor: middle;
+}
+
+.equip-label-sm {
+    font-size: 10px;
+    font-weight: 600;
+    fill: #ffffff;
+    text-anchor: middle;
+}
+
+.equip-id {
+    font-size: 9px;
+    font-weight: 500;
+    fill: rgba(255, 255, 255, 0.85);
+    text-anchor: middle;
+}
+
+.equip-zone {
+    font-size: 9px;
+    font-weight: 500;
+    fill: rgba(255, 255, 255, 0.85);
+    text-anchor: middle;
+    font-style: italic;
+}
+
+.equip-sub-label {
+    font-size: 9.5px;
+    font-weight: 600;
+    fill: #ffffff;
+    text-anchor: middle;
+}
+
+.equip-sub-hint {
+    font-size: 8px;
+    font-weight: 400;
+    fill: rgba(255, 255, 255, 0.85);
+    text-anchor: middle;
+}
+
+.annotation-text {
+    font-size: 9px;
+    font-weight: 500;
+    fill: #ffffff;
+    text-anchor: middle;
+}
+
+/* Additional Flow Colors */
+.flow-ra {
+    stroke: #94a3b8;
+}
+
+/* Animated Indicators */
+.status-indicator {
+    animation: status-pulse 2s infinite ease-in-out;
+}
+
+@keyframes status-pulse {
+
+    0%,
+    100% {
+        opacity: 0.4;
+        r: 4;
+    }
+
+    50% {
+        opacity: 1;
+        r: 6;
+    }
+}
+
+.questionnaire-box {
+    background: var(--color-chalk-light);
+    border-radius: 40px;
+    padding: 100px 40px;
+    text-align: center;
+}
+
+/* ============ Glass Modal Styles ============ */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.glass-modal {
+    background: rgba(16, 30, 26, 0.85);
+    border: 1px solid rgba(19, 236, 91, 0.3);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(19, 236, 91, 0.05);
+}
+
+.modal {
+    border-radius: 20px;
+    width: 680px;
+    max-width: 95vw;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: white;
+}
+
+.modal-overlay.active .modal {
+    transform: translateY(0) scale(1);
+}
+
+.equip-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding: 22px 26px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.equip-id-large {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.header-subtitle {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 4px;
+}
+
+.equip-status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.equip-status-badge.online {
+    background: rgba(19, 236, 91, 0.1);
+    color: #13ec5b;
+    border: 1px solid rgba(19, 236, 91, 0.2);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 8px currentColor;
+}
+
+.modal-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(8px);
+}
+
+.modal-close:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.modal-body {
+    padding: 0 26px 26px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.equip-params-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.param-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.param-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+}
+
+.param-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.param-unit {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
+    margin-left: 2px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+    .industries-vault {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .power-stages-wrapper {
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .power-pillar {
+        max-width: 100%;
+        flex: none;
+        width: calc(50% - 15px);
+        height: auto !important;
+        border-radius: 8px;
+    }
+}
+
+@media (max-width: 600px) {
+    .industries-vault {
+        grid-template-columns: 1fr;
+    }
+
+    .power-pillar {
+        width: 100%;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    h1 {
+        font-size: 3.2rem !important;
+    }
+}
+/* Service Card Hover - Dark Green */
+.service-card-hover {
+    cursor: pointer;
+}
+
+.service-card-hover:hover {
+    background: var(--color-deep-sage) !important;
+    border-color: transparent !important;
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(19,236,91,0.15);
+}
+
+.service-card-hover:hover .technical-mono {
+    color: var(--color-porsche-green) !important;
+    opacity: 1 !important;
+}
+
+.service-card-hover:hover h3 {
+    color: white !important;
+}
+
+.service-card-hover:hover p {
+    color: rgba(255,255,255,0.7) !important;
+    opacity: 1 !important;
+}

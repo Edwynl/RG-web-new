@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retragreen | Precision Building Intelligence</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+    /* ── Liquid Glass — System Architecture Layers ── */
+    .arch-layer {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        cursor: default;
+    }
+
+    /* Base glass border treatment */
+    .arch-layer {
+        border-top: 1px solid rgba(255,255,255,0.18) !important;
+        border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+        border-left: 1px solid rgba(255,255,255,0.10) !important;
+        border-right: 1px solid rgba(255,255,255,0.06) !important;
+    }
+
+    /* Rainbow refraction top line — appears on hover */
+    .arch-layer::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(
+            90deg,
+            transparent 2%,
+            rgba(255,130,130,0.60) 18%,
+            rgba(130,255,190,0.65) 36%,
+            rgba(130,195,255,0.65) 55%,
+            rgba(195,130,255,0.60) 74%,
+            rgba(255,220,100,0.55) 90%,
+            transparent 98%
+        );
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+        z-index: 3;
+    }
+    .arch-layer:hover::after { opacity: 1; }
+
+    /* Mouse-tracking glow blob */
+    .arch-layer::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+            circle var(--glow-r, 220px) at var(--glow-x, 50%) var(--glow-y, 50%),
+            rgba(255,255,255,0.07),
+            transparent 60%
+        );
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        pointer-events: none;
+        z-index: 1;
+    }
+    .arch-layer:hover::before { opacity: 1; }
+
+    /* Hover: lift + glass brighten */
+    .arch-layer:hover {
+        backdrop-filter: blur(32px) saturate(180%) brightness(108%);
+        -webkit-backdrop-filter: blur(32px) saturate(180%) brightness(108%);
+        border-top-color: rgba(255,255,255,0.55) !important;
+        border-color: rgba(255,255,255,0.22) !important;
+        box-shadow:
+            0 12px 40px rgba(0,0,0,0.45),
+            0 2px 10px rgba(0,0,0,0.25),
+            inset 0 1px 0 rgba(255,255,255,0.35),
+            inset 0 -1px 0 rgba(0,0,0,0.12) !important;
+        transform: translateY(-2px) scale(1.004);
+        z-index: 10;
+    }
+
+    /* Inner content cards glass sheen on parent hover */
+    .arch-layer:hover .arch-card {
+        background: rgba(255,255,255,0.07) !important;
+        border-color: rgba(255,255,255,0.18) !important;
+        transition: all 0.3s ease;
+    }
+
+    /* Inner content cards */
+    .arch-card {
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Pill tags glass */
+    .arch-pill {
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+    }
+    .arch-layer:hover .arch-pill {
+        background: rgba(255,255,255,0.09) !important;
+        border-color: rgba(255,255,255,0.20) !important;
+    }
+    </style>
+    <script>
+    // Mouse-tracking glow for each arch-layer
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.arch-layer').forEach(layer => {
+            layer.addEventListener('mousemove', e => {
+                const rect = layer.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1) + '%';
+                const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1) + '%';
+                layer.style.setProperty('--glow-x', x);
+                layer.style.setProperty('--glow-y', y);
+                layer.style.setProperty('--glow-r', '260px');
+            });
+            layer.addEventListener('mouseleave', () => {
+                layer.style.setProperty('--glow-r', '0px');
+            });
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <!-- Premium Header -->
+    <header class="glass-panel"
+        style="position: fixed; top: 24px; left: 50%; transform: translateX(-50%); width: 92%; z-index: 1000; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.4); background: rgba(255, 255, 255, 0.15); border-radius: 99px; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); box-shadow: 0 10px 40px rgba(0,0,0,0.06);">
+        <div class="logo"
+            style="font-weight: 600; font-size: 1.1rem; letter-spacing: 3px; color: var(--color-deep-sage); text-decoration: none;">
+            RETRAGREEN <span class="accent-porsche-green">AU</span>
+        </div>
+        <nav>
+            <ul
+                style="list-style: none; display: flex; gap: 15px; font-weight: 400; font-size: 0.8rem; letter-spacing: 1px; align-items: center;">
+                <li><a href="#about" class="nav-pill">ABOUT</a></li>
+                <li><a href="#services" class="nav-pill">SERVICES</a></li>
+                <li><a href="#architecture" class="nav-pill">ARCHITECTURE</a></li>
+                <li><a href="#plans" class="nav-pill">PLANS</a></li>
+                <li><a href="#contact" class="nav-pill">CONTACT</a></li>
+            </ul>
+        </nav>
+        <button class="btn-metallic" onclick="location.href='#contact'">REQUEST DEMO</button>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero"
+            style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle at 50% 50%, #ffffff 0%, var(--color-chalk) 100%); position: relative; overflow: hidden; padding: 120px 40px;">
+            <!-- Canvas Tech Network Background -->
+            <canvas id="techCanvas"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
+
+            <div
+                style="position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 40%, rgba(61, 106, 98, 0.05) 50%, transparent 60%); pointer-events: none; z-index: 0;">
+            </div>
+
+            <div class="container" style="position: relative; z-index: 1;">
+                <h1
+                    style="font-size: 4.5rem; margin-bottom: 24px; line-height: 1.05; color: var(--color-deep-sage); letter-spacing: -0.02em;">
+                    Embedding Intelligence <br>So Things Become <span class="accent-porsche-green"
+                        style="font-weight: 400;">Smarter</span></h1>
+                <p
+                    style="font-size: 1rem; margin-bottom: 50px; opacity: 0.8; letter-spacing: 8px; font-weight: 400; color: var(--color-deep-sage);">
+                    TURNING YOUR VISION INTO PROFIT</p>
+                <div style="display: flex; gap: 20px; justify-content: center;">
+                    <button class="btn-metallic" onclick="location.href='#contact'">GET STARTED</button>
+                    <button class="btn-metallic" style="background: transparent; color: var(--color-deep-sage);"
+                        onclick="location.href='#plans'">VIEW PLANS</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Partners Strip -->
+        <section class="partners-strip">
+            <div class="container">
+                <p style="text-align:center; font-size:0.65rem; letter-spacing:3px; opacity:0.45; margin-bottom:28px; color: var(--color-deep-sage);">TRUSTED BY INDUSTRY LEADERS</p>
+                <div class="partners-wrapper">
+                    <div class="partner-item">A*STAR</div>
+                    <div class="partner-item">CSIRO</div>
+                    <div class="partner-item">AWS</div>
+                    <div class="partner-item">Victoria Government</div>
+                    <div class="partner-item">TÜV Rheinland</div>
+                    <div class="partner-item">UniSQ</div>
+                    <div class="partner-item">Monash</div>
+                    <div class="partner-item">UTS</div>
+                    <div class="partner-item">Lendlease</div>
+                    <div class="partner-item">Frasers Property</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Company Background -->
+        <section id="about" class="section-padding" style="background: white;">
+            <div class="container">
+                <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 100px; align-items: start;">
+                    <div>
+                        <h2 style="font-size: 2.5rem; color: var(--color-deep-sage); margin-bottom: 30px;">COMPANY
+                            <br><span class="accent-porsche-green">BACKGROUND.</span>
+                        </h2>
+                        <div
+                            style="width: 60px; height: 2px; background: var(--color-porsche-green); margin-bottom: 40px;">
+                        </div>
+                        <div class="technical-mono" style="color: var(--color-titanium); opacity: 0.5;">HQ: PORT MELBOURNE, VIC</div>
+                        <div class="technical-mono" style="color: var(--color-titanium); opacity: 0.5; margin-top: 8px;">GLOBAL PRESENCE: 3 COUNTRIES</div>
+                        <div style="margin-top: 40px; display: flex; flex-direction: column; gap: 16px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-porsche-green); flex-shrink:0;"></div>
+                                <span style="font-size: 0.8rem; color: var(--color-titanium); letter-spacing: 1px;">FinTech / CleanTech / AI + IoT</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-porsche-green); flex-shrink:0;"></div>
+                                <span style="font-size: 0.8rem; color: var(--color-titanium); letter-spacing: 1px;">Retragreen Holdings (Global Parent)</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-porsche-green); flex-shrink:0;"></div>
+                                <span style="font-size: 0.8rem; color: var(--color-titanium); letter-spacing: 1px;">Up to 25% Energy Cost Savings</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <p>Retragreen Australia is a member of <strong>Retragreen Holdings</strong>, a privately-owned
+                            global entity operating across 3 countries, headquartered in Port Melbourne, VIC. As a <strong>FinTech and CleanTech</strong> company, we are dedicated to addressing the urgent need for decarbonisation through innovative financing solutions and smart energy optimisation.</p>
+                        <p style="margin-top: 25px;">At our core, we leverage <strong>real-time and predictive data analytics</strong> to foster a more sustainable future. Through our AI and IoT solutions, we support the adoption of renewable energy and smart technologies, empowering companies and buildings to reduce their carbon footprint and optimise energy usage.</p>
+                        <p style="margin-top: 25px;">Our solutions help businesses comply with <strong>ESG environmental standards</strong>, reduce energy costs, and enhance operational efficiency — with demonstrated savings of <strong>up to 25%</strong>. Retragreen's commitment to sustainability has no bounds.</p>
+
+                        <!-- Solution Pills from SOP -->
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px;">
+                            <span style="padding: 8px 18px; border-radius: 99px; border: 1px solid var(--color-malachite); font-size: 0.75rem; letter-spacing: 1px; color: var(--color-deep-sage); font-weight: 500;">BMS Integration</span>
+                            <span style="padding: 8px 18px; border-radius: 99px; border: 1px solid var(--color-malachite); font-size: 0.75rem; letter-spacing: 1px; color: var(--color-deep-sage); font-weight: 500;">Hardware Installation</span>
+                            <span style="padding: 8px 18px; border-radius: 99px; border: 1px solid var(--color-malachite); font-size: 0.75rem; letter-spacing: 1px; color: var(--color-deep-sage); font-weight: 500;">SaaS — AI + IoT Platform</span>
+                            <span style="padding: 8px 18px; border-radius: 99px; border: 1px solid var(--color-malachite); font-size: 0.75rem; letter-spacing: 1px; color: var(--color-deep-sage); font-weight: 500;">Energy Consultations</span>
+                            <span style="padding: 8px 18px; border-radius: 99px; border: 1px solid var(--color-malachite); font-size: 0.75rem; letter-spacing: 1px; color: var(--color-deep-sage); font-weight: 500;">Energy Reports</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leadership Team -->
+        <section class="section-padding bg-malachite-depth" style="border-top: 1px solid rgba(255,255,255,0.05);">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <h2 style="font-size: 2.22rem; letter-spacing: 4px; color: white;">LEADERSHIP TEAM</h2>
+                    <p style="opacity: 0.4; font-size: 0.8rem; letter-spacing: 4px; margin-top: 10px;">ARCHITECTS OF INTELLIGENCE</p>
+                </div>
+
+                <div class="team-grid">
+                    <div class="team-window">
+                        <div class="member-avatar">
+                            <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="1.5"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="member-name">Patrick Lay</div>
+                        <div class="member-role">Founder & CEO</div>
+                    </div>
+                    <div class="team-window">
+                        <div class="member-avatar">
+                            <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="1.5"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="member-name">Walter Adamson</div>
+                        <div class="member-role">Head of AI</div>
+                    </div>
+                    <div class="team-window">
+                        <div class="member-avatar">
+                            <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="1.5"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="member-name">Chun Hui Goh</div>
+                        <div class="member-role">Project Director</div>
+                    </div>
+                    <div class="team-window">
+                        <div class="member-avatar">
+                            <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="1.5"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="member-name">Syed Ali</div>
+                        <div class="member-role">Regional Manager</div>
+                    </div>
+                    <div class="team-window">
+                        <div class="member-avatar">
+                            <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="1.5"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="member-name">Edwyn Luo</div>
+                        <div class="member-role">Tech Lead</div>
+                    </div>
+                    <div class="team-window">
+                        <div class="member-avatar">
+                            <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="1.5"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="member-name">Zeila</div>
+                        <div class="member-role">Administrator</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HVAC SYSTEM ARCHITECTURE -->
+        <section id="architecture" class="section-padding bg-malachite-depth"
+            style="padding-top: 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <div class="container">
+                <div
+                    style="text-align: center; margin-bottom: 80px; padding-top: 120px; border-top: 1px solid rgba(255,255,255,0.05);">
+                    <h2 style="font-size: 2.22rem; letter-spacing: 4px; color: white;">SYSTEM TOPOLOGY</h2>
+                    <p style="opacity: 0.4; font-size: 0.8rem; letter-spacing: 4px; margin-top: 10px;">EDGE TO CLOUD
+                        ORCHESTRATION</p>
+                </div>
+
+                <div class="topology-vault">
+                    <div class="device-node">
+                        <div class="technical-mono" style="margin-bottom: 5px;">LAYER 03</div>
+                        <h4 style="color: white; font-size: 0.9rem;">AWS CLOUD</h4>
+                        <p style="font-size: 0.65rem; opacity: 0.5; margin-top: 5px; color: white;">Central Analytics &
+                            Storage</p>
+                    </div>
+                    <div class="flow-line-v"></div>
+
+                    <div class="device-node">
+                        <div class="technical-mono" style="margin-bottom: 5px;">LAYER 02</div>
+                        <h4 style="color: white; font-size: 0.9rem;">SMART GATEWAY</h4>
+                        <p style="font-size: 0.65rem; opacity: 0.5; margin-top: 5px; color: white;">Edge Computing
+                            Engine</p>
+                    </div>
+                    <div class="flow-line-v"></div>
+
+                    <div class="device-node">
+                        <div class="technical-mono" style="margin-bottom: 5px;">LAYER 01</div>
+                        <h4 style="color: white; font-size: 0.9rem;">MAIN CONTROLLER</h4>
+                        <p style="font-size: 0.65rem; opacity: 0.5; margin-top: 5px; color: white;">BMS PLC Integration
+                        </p>
+                    </div>
+
+                    <div class="horizontal-bus"></div>
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <div class="device-node" style="width: 160px; padding: 15px;">
+                            <h4 style="color: var(--color-porsche-green); font-size: 0.8rem;">WATER CHILLER</h4>
+                            <p style="font-size: 0.6rem; opacity: 0.5; color: white;">MODBUS/MQTT</p>
+                        </div>
+                        <div class="device-node" style="width: 160px; padding: 15px;">
+                            <h4 style="color: var(--color-porsche-green); font-size: 0.8rem;">FCU / AHU</h4>
+                            <p style="font-size: 0.6rem; opacity: 0.5; color: white;">BACnet</p>
+                        </div>
+                        <div class="device-node" style="width: 160px; padding: 15px;">
+                            <h4 style="color: var(--color-porsche-green); font-size: 0.8rem;">SENSOR ARRAYS</h4>
+                            <p style="font-size: 0.6rem; opacity: 0.5; color: white;">NB-IoT / Lora</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- PLATFORM ARCHITECTURE -->
+        <section class="section-padding bg-malachite-depth" style="border-top: 1px solid rgba(255,255,255,0.05);">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <div class="technical-mono" style="text-align:center; margin-bottom: 16px; color: var(--color-porsche-green);">PLATFORM INTELLIGENCE</div>
+                    <h2 style="font-size: 2.22rem; letter-spacing: 4px; color: white;">SYSTEM ARCHITECTURE</h2>
+                    <p style="opacity: 0.4; font-size: 0.8rem; letter-spacing: 4px; margin-top: 10px;">END-TO-END ENERGY INTELLIGENCE STACK</p>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 3px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
+
+                    <!-- Layer 6: Visualization -->
+                    <div class="arch-layer" style="background: linear-gradient(135deg, rgba(19,236,91,0.18) 0%, rgba(19,236,91,0.08) 100%); border-bottom: 1px solid rgba(19,236,91,0.2); padding: 24px 36px; display: flex; align-items: center; gap: 40px;">
+                        <div style="min-width: 180px;">
+                            <div style="font-size: 0.6rem; letter-spacing: 3px; color: var(--color-porsche-green); margin-bottom: 6px;">LAYER 06</div>
+                            <div style="font-size: 1rem; font-weight: 600; color: var(--color-porsche-green); letter-spacing: 2px;">VISUALIZATION</div>
+                        </div>
+                        <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 16px 30px; background: rgba(19,236,91,0.1); border-radius: 10px; border: 1px solid rgba(19,236,91,0.25);">
+                            <span style="color: white; font-size: 0.95rem; letter-spacing: 3px; font-weight: 300;">3D &nbsp;|&nbsp; GIS &nbsp;|&nbsp; BIM &nbsp;|&nbsp; Large Screen Display</span>
+                        </div>
+                    </div>
+
+                    <!-- Layer 5: Business Function -->
+                    <div class="arch-layer" style="background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 28px 36px;">
+                        <div style="display: flex; align-items: flex-start; gap: 40px;">
+                            <div style="min-width: 180px; padding-top: 6px;">
+                                <div style="font-size: 0.6rem; letter-spacing: 3px; color: rgba(255,196,0,0.7); margin-bottom: 6px;">LAYER 05</div>
+                                <div style="font-size: 1rem; font-weight: 600; color: #FFC400; letter-spacing: 2px;">BUSINESS<br>FUNCTION</div>
+                            </div>
+                            <div style="flex: 1; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;">
+                                <div class="arch-card" style="padding: 14px 16px; background: rgba(255,196,0,0.08); border: 1px solid rgba(255,196,0,0.2); border-radius: 10px; text-align: center;"><div style="font-size: 0.72rem; color: white; line-height: 1.5;">Energy Real-time Monitoring</div></div>
+                                <div class="arch-card" style="padding: 14px 16px; background: rgba(255,196,0,0.08); border: 1px solid rgba(255,196,0,0.2); border-radius: 10px; text-align: center;"><div style="font-size: 0.72rem; color: white; line-height: 1.5;">Energy-saving Evaluation</div></div>
+                                <div class="arch-card" style="padding: 14px 16px; background: rgba(255,196,0,0.08); border: 1px solid rgba(255,196,0,0.2); border-radius: 10px; text-align: center;"><div style="font-size: 0.72rem; color: white; line-height: 1.5;">Energy Consumption Analysis</div></div>
+                                <div class="arch-card" style="padding: 14px 16px; background: rgba(255,196,0,0.08); border: 1px solid rgba(255,196,0,0.2); border-radius: 10px; text-align: center;"><div style="font-size: 0.72rem; color: white; line-height: 1.5;">Energy Audit Evaluation</div></div>
+                                <div class="arch-card" style="padding: 14px 16px; background: rgba(255,196,0,0.08); border: 1px solid rgba(255,196,0,0.2); border-radius: 10px; text-align: center;"><div style="font-size: 0.72rem; color: white; line-height: 1.5;">Plan Cost Management</div></div>
+                                <div class="arch-card" style="padding: 14px 16px; background: rgba(255,196,0,0.08); border: 1px solid rgba(255,196,0,0.2); border-radius: 10px; text-align: center;"><div style="font-size: 0.72rem; color: white; line-height: 1.5;">Comprehensive Reports</div></div>
+                                <div class="arch-card" style="padding: 14px 16px; background: rgba(255,196,0,0.08); border: 1px solid rgba(255,196,0,0.2); border-radius: 10px; text-align: center;"><div style="font-size: 0.72rem; color: white; line-height: 1.5;">Equipment Operation &amp; Maintenance</div></div>
+                                <div class="arch-card" style="padding: 14px 16px; background: rgba(255,196,0,0.08); border: 1px solid rgba(255,196,0,0.2); border-radius: 10px; text-align: center;"><div style="font-size: 0.72rem; color: white; line-height: 1.5;">Energy Diagnosis</div></div>
+                                <div class="arch-card" style="padding: 14px 16px; background: rgba(255,196,0,0.08); border: 1px solid rgba(255,196,0,0.2); border-radius: 10px; text-align: center;"><div style="font-size: 0.72rem; color: white; line-height: 1.5;">Intelligent Control</div></div>
+                                <div class="arch-card" style="padding: 14px 16px; background: rgba(255,196,0,0.08); border: 1px solid rgba(255,196,0,0.2); border-radius: 10px; text-align: center;"><div style="font-size: 0.72rem; color: white; line-height: 1.5;">Recharge and Billing</div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Layer 4: Data Statistics & Analysis -->
+                    <div class="arch-layer" style="background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 28px 36px;">
+                        <div style="display: flex; align-items: flex-start; gap: 40px;">
+                            <div style="min-width: 180px; padding-top: 6px;">
+                                <div style="font-size: 0.6rem; letter-spacing: 3px; color: rgba(111,212,184,0.7); margin-bottom: 6px;">LAYER 04</div>
+                                <div style="font-size: 1rem; font-weight: 600; letter-spacing: 2px; color: #6FD4B8;">DATA STATISTICS<br>&amp; ANALYSIS</div>
+                            </div>
+                            <div style="flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
+                                <div class="arch-card" style="padding: 18px; background: rgba(61,106,98,0.15); border: 1px dashed rgba(111,212,184,0.25); border-radius: 12px;">
+                                    <div style="font-size: 0.72rem; font-weight: 600; color: #6FD4B8; margin-bottom: 10px; letter-spacing: 1px;">Regional Equipment Analysis</div>
+                                    <div style="font-size: 0.68rem; color: rgba(255,255,255,0.45); line-height: 1.7;">- Energy Price<br>- Energy Supply &amp; Demand Balance<br>- Energy Flow Diagram</div>
+                                </div>
+                                <div class="arch-card" style="padding: 18px; background: rgba(61,106,98,0.15); border: 1px dashed rgba(111,212,184,0.25); border-radius: 12px;">
+                                    <div style="font-size: 0.72rem; font-weight: 600; color: #6FD4B8; margin-bottom: 10px; letter-spacing: 1px;">Energy Balance</div>
+                                    <div style="font-size: 0.68rem; color: rgba(255,255,255,0.45); line-height: 1.7;">- Energy Conversion Balance<br>- Energy Flow Balance</div>
+                                </div>
+                                <div class="arch-card" style="padding: 18px; background: rgba(61,106,98,0.15); border: 1px dashed rgba(111,212,184,0.25); border-radius: 12px;">
+                                    <div style="font-size: 0.72rem; font-weight: 600; color: #6FD4B8; margin-bottom: 10px; letter-spacing: 1px;">Indicator Analysis</div>
+                                    <div style="font-size: 0.68rem; color: rgba(255,255,255,0.45); line-height: 1.7;">- Energy per Unit Area<br>- Energy per Capita<br>- Energy per Unit of Production<br>- Incremental Efficiency</div>
+                                </div>
+                                <div class="arch-card" style="padding: 18px; background: rgba(61,106,98,0.15); border: 1px dashed rgba(111,212,184,0.25); border-radius: 12px;">
+                                    <div style="font-size: 0.72rem; font-weight: 600; color: #6FD4B8; margin-bottom: 10px; letter-spacing: 1px;">Optimization &amp; Energy-saving</div>
+                                    <div style="font-size: 0.68rem; color: rgba(255,255,255,0.45); line-height: 1.7;">- Optimization Strategy<br>- Energy Efficiency Prediction<br>- Energy-saving Project Management</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Layer 3: Data Processing -->
+                    <div class="arch-layer" style="background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 28px 36px;">
+                        <div style="display: flex; align-items: flex-start; gap: 40px;">
+                            <div style="min-width: 180px; padding-top: 6px;">
+                                <div style="font-size: 0.6rem; letter-spacing: 3px; color: rgba(138,180,248,0.7); margin-bottom: 6px;">LAYER 03</div>
+                                <div style="font-size: 1rem; font-weight: 600; letter-spacing: 2px; color: #8AB4F8;">DATA<br>PROCESSING</div>
+                            </div>
+                            <div style="flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                                <div class="arch-card" style="padding: 18px; background: rgba(100,149,237,0.07); border: 1px dashed rgba(138,180,248,0.2); border-radius: 12px;">
+                                    <div style="font-size: 0.72rem; font-weight: 600; color: #8AB4F8; margin-bottom: 10px; letter-spacing: 1px;">Data Model Management</div>
+                                    <div style="font-size: 0.68rem; color: rgba(255,255,255,0.45); line-height: 1.7;">- Regional Model<br>- Equipment Model<br>- Production Model<br>- Shift Model</div>
+                                </div>
+                                <div class="arch-card" style="padding: 18px; background: rgba(100,149,237,0.07); border: 1px dashed rgba(138,180,248,0.2); border-radius: 12px;">
+                                    <div style="font-size: 0.72rem; font-weight: 600; color: #8AB4F8; margin-bottom: 10px; letter-spacing: 1px;">Data Management</div>
+                                    <div style="font-size: 0.68rem; color: rgba(255,255,255,0.45); line-height: 1.7;">- Data Entry<br>- Data Correction<br>- Data Filling<br>- Data Modification</div>
+                                </div>
+                                <div class="arch-card" style="padding: 18px; background: rgba(100,149,237,0.07); border: 1px dashed rgba(138,180,248,0.2); border-radius: 12px;">
+                                    <div style="font-size: 0.72rem; font-weight: 600; color: #8AB4F8; margin-bottom: 10px; letter-spacing: 1px;">Basic Data Calculation</div>
+                                    <div style="font-size: 0.68rem; color: rgba(255,255,255,0.45); line-height: 1.7;">- Energy Price<br>- Real-time Segment Statistics<br>- Cost Overruns<br>- Fault Signal Overruns<br>- Measurement Overruns</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Layer 2: Data Collection -->
+                    <div class="arch-layer" style="background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 22px 36px; display: flex; align-items: center; gap: 40px;">
+                        <div style="min-width: 180px;">
+                            <div style="font-size: 0.6rem; letter-spacing: 3px; color: rgba(19,236,91,0.5); margin-bottom: 6px;">LAYER 02</div>
+                            <div style="font-size: 1rem; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,0.6);">DATA COLLECTION</div>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.55); letter-spacing: 1px;">Energy Data</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.55); letter-spacing: 1px;">Environmental Data</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.55); letter-spacing: 1px;">Operational Data</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.55); letter-spacing: 1px;">Warning Data</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.55); letter-spacing: 1px;">Fault Data</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.55); letter-spacing: 1px;">Distribution Data</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.55); letter-spacing: 1px;">Financial Data</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.55); letter-spacing: 1px;">Economic Data</span>
+                        </div>
+                    </div>
+
+                    <!-- Layer 1: Monitoring Equipment -->
+                    <div class="arch-layer" style="background: rgba(19,236,91,0.04); padding: 22px 36px; display: flex; align-items: center; gap: 40px;">
+                        <div style="min-width: 180px;">
+                            <div style="font-size: 0.6rem; letter-spacing: 3px; color: rgba(19,236,91,0.4); margin-bottom: 6px;">LAYER 01</div>
+                            <div style="font-size: 1rem; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,0.4);">MONITORING<br>EQUIPMENT</div>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(19,236,91,0.06); border: 1px solid rgba(19,236,91,0.12); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 1px;">Smart Electricity Meters</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(19,236,91,0.06); border: 1px solid rgba(19,236,91,0.12); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 1px;">Smart Water Meters</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(19,236,91,0.06); border: 1px solid rgba(19,236,91,0.12); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 1px;">Smart Heat Meters</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(19,236,91,0.06); border: 1px solid rgba(19,236,91,0.12); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 1px;">Smart Gas Meters</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(19,236,91,0.06); border: 1px solid rgba(19,236,91,0.12); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 1px;">Flow Meters</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(19,236,91,0.06); border: 1px solid rgba(19,236,91,0.12); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 1px;">Comprehensive Devices</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(19,236,91,0.06); border: 1px solid rgba(19,236,91,0.12); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 1px;">DCS</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(19,236,91,0.06); border: 1px solid rgba(19,236,91,0.12); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 1px;">SCADA</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(19,236,91,0.06); border: 1px solid rgba(19,236,91,0.12); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 1px;">PLC</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(19,236,91,0.06); border: 1px solid rgba(19,236,91,0.12); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 1px;">RTU</span>
+                            <span class="arch-pill" style="padding: 8px 16px; background: rgba(19,236,91,0.06); border: 1px solid rgba(19,236,91,0.12); border-radius: 99px; font-size: 0.7rem; color: rgba(255,255,255,0.4); letter-spacing: 1px;">Power Distribution Systems</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- THE ENGINEERING VAULT -->
+        <section class="section-padding bg-malachite-depth" style="padding-top: 0;">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 80px; padding-top: 120px;">
+                    <h2 style="font-size: 2.22rem; letter-spacing: 4px; color: white;">THE ENGINEERING VAULT</h2>
+                    <p style="opacity: 0.4; font-size: 0.8rem; letter-spacing: 2px; margin-top: 10px;">VERTICAL
+                        INTEGRATION BY INDUSTRY</p>
+                </div>
+            </div>
+            <div class="industries-vault">
+                <div class="monolith">
+                    <div class="technical-mono">01 // MANUFACTURING</div>
+                    <h3 style="color: white; font-size: 1.6rem; font-weight: 300; margin-bottom: 20px;">Semi-Conductor
+                        Plant</h3>
+                    <p
+                        style="font-size: 0.85rem; opacity: 0.5; color: white; line-height: 1.8; margin-bottom: 40px; max-width: 300px;">
+                        High-precision environmental control for automotive PC board production.</p>
+                    <div
+                        style="font-size: 3.5rem; font-weight: 200; color: var(--color-porsche-green); line-height: 1;">
+                        15%</div>
+                    <p style="font-size: 0.7rem; opacity: 0.4; color: white; letter-spacing: 2px; margin-top: 10px;">
+                        ENERGY SAVED VIA NDE AI</p>
+                </div>
+                <div class="monolith">
+                    <div class="technical-mono">02 // HOSPITALITY</div>
+                    <h3 style="color: white; font-size: 1.6rem; font-weight: 300; margin-bottom: 20px;">5-Star Luxury
+                        Resort</h3>
+                    <p
+                        style="font-size: 0.85rem; opacity: 0.5; color: white; line-height: 1.8; margin-bottom: 40px; max-width: 300px;">
+                        Modernizing legacy PLC systems to cloud-native intelligent orchestration.</p>
+                    <div
+                        style="font-size: 3.5rem; font-weight: 200; color: var(--color-porsche-green); line-height: 1;">
+                        14.5%</div>
+                    <p style="font-size: 0.7rem; opacity: 0.4; color: white; letter-spacing: 2px; margin-top: 10px;">
+                        OPEX REDUCTION RATE</p>
+                </div>
+                <div class="monolith">
+                    <div class="technical-mono">03 // WHOLESALE</div>
+                    <h3 style="color: white; font-size: 1.6rem; font-weight: 300; margin-bottom: 20px;">AUFS Food
+                        Logistics</h3>
+                    <p
+                        style="font-size: 0.85rem; opacity: 0.5; color: white; line-height: 1.8; margin-bottom: 40px; max-width: 300px;">
+                        Optimizing cold storage and visibility for demand response. Darwin, NT, Australia.</p>
+                    <div
+                        style="font-size: 3.5rem; font-weight: 200; color: var(--color-porsche-green); line-height: 1;">
+                        $120K</div>
+                    <p style="font-size: 0.7rem; opacity: 0.4; color: white; letter-spacing: 2px; margin-top: 10px;">
+                        ANNUAL ELECTRICITY SAVINGS</p>
+                </div>
+                <div class="monolith">
+                    <div class="technical-mono">04 // RETAIL</div>
+                    <h3 style="color: white; font-size: 1.6rem; font-weight: 300; margin-bottom: 20px;">Commercial Hubs
+                    </h3>
+                    <p
+                        style="font-size: 0.85rem; opacity: 0.5; color: white; line-height: 1.8; margin-bottom: 40px; max-width: 300px;">
+                        Eliminating massive overcooling in high-traffic shopping environments.</p>
+                    <div
+                        style="font-size: 3.5rem; font-weight: 200; color: var(--color-porsche-green); line-height: 1;">
+                        13%</div>
+                    <p style="font-size: 0.7rem; opacity: 0.4; color: white; letter-spacing: 2px; margin-top: 10px;">
+                        CARBON FOOTPRINT CUT</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section class="section-padding" id="services" style="background: white;">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <div class="technical-mono" style="text-align:center; margin-bottom: 16px;">OUR CAPABILITIES</div>
+                    <h2 style="font-size: 2.22rem; letter-spacing: 4px; color: var(--color-deep-sage);">SERVICES</h2>
+                    <p style="opacity: 0.5; margin-top: 15px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.8; font-size: 0.95rem; color: var(--color-titanium);">Retragreen's solutions are highly customisable and tailored to meet the specific requirements of each client. By collaborating closely with our clients, we identify potential areas for improvement and develop a customised energy-saving plan.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                    <!-- Service 1 -->
+                    <div class="service-card-hover" style="padding: 40px; border-radius: 20px; border: 1px solid rgba(44,62,53,0.12); transition: all 0.3s ease; background: var(--color-chalk-light);">
+                        <div class="technical-mono" style="margin-bottom: 16px;">01</div>
+                        <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--color-deep-sage); margin-bottom: 16px; letter-spacing: 1px;">AI + IoT Integration</h3>
+                        <p style="font-size: 0.88rem; color: var(--color-titanium); line-height: 1.8; opacity: 0.8;">IoT sensors measure temperature, humidity, and environmental factors. Data is analysed in real-time on the Retragreen dashboard — a single source of truth for energy decisions.</p>
+                    </div>
+                    <!-- Service 2 -->
+                    <div class="service-card-hover" style="padding: 40px; border-radius: 20px; border: 1px solid rgba(44,62,53,0.12); transition: all 0.3s ease; background: var(--color-chalk-light);">
+                        <div class="technical-mono" style="margin-bottom: 16px;">02</div>
+                        <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--color-deep-sage); margin-bottom: 16px; letter-spacing: 1px;">Predictive Analytics</h3>
+                        <p style="font-size: 0.88rem; color: var(--color-titanium); line-height: 1.8; opacity: 0.8;">Real-time data provides visibility for better energy management. Predictive analytics help reduce machine downtime and enhance operational efficiency across all systems.</p>
+                    </div>
+                    <!-- Service 3 -->
+                    <div class="service-card-hover" style="padding: 40px; border-radius: 20px; background: var(--color-chalk-light); border: 1px solid rgba(44,62,53,0.12); transition: all 0.3s ease;">
+                        <div class="technical-mono" style="margin-bottom: 16px;">03</div>
+                        <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--color-deep-sage); margin-bottom: 16px; letter-spacing: 1px;">BMS Integration</h3>
+                        <p style="font-size: 0.88rem; color: var(--color-titanium); line-height: 1.8; opacity: 0.8;">Vendor-agnostic hardware integrates with most Building Management Systems — Mitsubishi, Honeywell, Emerson, Siemens and more. Full support provided throughout deployment.</p>
+                    </div>
+                    <!-- Service 4 -->
+                    <div class="service-card-hover" style="padding: 40px; border-radius: 20px; border: 1px solid rgba(44,62,53,0.12); transition: all 0.3s ease; background: var(--color-chalk-light);">
+                        <div class="technical-mono" style="margin-bottom: 16px;">04</div>
+                        <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--color-deep-sage); margin-bottom: 16px; letter-spacing: 1px;">Proprietary Hardware & Software</h3>
+                        <p style="font-size: 0.88rem; color: var(--color-titanium); line-height: 1.8; opacity: 0.8;">Own proprietary hardware and customised software developed through R&D partnerships. Highly customisable to meet specific client requirements and industry standards.</p>
+                    </div>
+                    <!-- Service 5 -->
+                    <div class="service-card-hover" style="padding: 40px; border-radius: 20px; border: 1px solid rgba(44,62,53,0.12); transition: all 0.3s ease; background: var(--color-chalk-light);">
+                        <div class="technical-mono" style="margin-bottom: 16px;">05</div>
+                        <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--color-deep-sage); margin-bottom: 16px; letter-spacing: 1px;">Professional Services & ESG Compliance</h3>
+                        <p style="font-size: 0.88rem; color: var(--color-titanium); line-height: 1.8; opacity: 0.8;">End-to-end service: hardware deployment, BMS integration, environmental compliance reports, NABERS ratings improvement. CapEx and OpEx financing options available.</p>
+                    </div>
+                    <!-- Service 6 -->
+                    <div class="service-card-hover" style="padding: 40px; border-radius: 20px; border: 1px solid rgba(44,62,53,0.12); transition: all 0.3s ease; background: var(--color-chalk-light);">
+                        <div class="technical-mono" style="margin-bottom: 16px;">06</div>
+                        <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--color-deep-sage); margin-bottom: 16px; letter-spacing: 1px;">Managed Services</h3>
+                        <p style="font-size: 0.88rem; color: var(--color-titanium); line-height: 1.8; opacity: 0.8;">Post-deployment support options: transition to your IT/Service Desk team or use Retragreen's dedicated Service Desk. Flexible service plans with guaranteed performance outcomes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- POWER STAGES -->
+        <section class="section-padding" id="plans" style="background: var(--color-chalk);">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <h2 style="font-size: 2.22rem; letter-spacing: 4px; color: var(--color-deep-sage);">POWER STAGES
+                    </h2>
+                    <p style="opacity: 0.5; margin-top: 15px; letter-spacing: 4px; font-size: 0.7rem;">CHOOSE YOUR
+                        OPTIMIZATION DEPTH</p>
+                </div>
+                <div class="power-stages-wrapper">
+                    <div class="power-pillar pillar-bronze">
+                        <div class="emblem-badge">B3</div>
+                        <h4 style="color: white; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;">BRONZE</h4>
+                        <div style="color: rgba(255,255,255,0.5); font-size: 0.65rem; letter-spacing: 2px; margin-bottom: 16px;">ENTRY LEVEL</div>
+                        <div style="font-size: 1.3rem; font-weight: 300; color: #cd7f32; letter-spacing: 1px; margin-bottom: 10px;">Data Analysis</div>
+                        <p style="font-size: 0.78rem; color: rgba(255,255,255,0.55); line-height: 1.7;">Real-time energy monitoring, dashboards and reporting to establish your baseline performance.</p>
+                    </div>
+                    <div class="power-pillar pillar-silver">
+                        <div class="emblem-badge">S5</div>
+                        <h4 style="color: white; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;">SILVER</h4>
+                        <div style="color: rgba(255,255,255,0.5); font-size: 0.65rem; letter-spacing: 2px; margin-bottom: 16px;">INTEGRATION</div>
+                        <div style="font-size: 1.3rem; font-weight: 300; color: #C0C0C0; letter-spacing: 1px; margin-bottom: 10px;">BMS Integration</div>
+                        <p style="font-size: 0.78rem; color: rgba(255,255,255,0.55); line-height: 1.7;">Vendor-agnostic connection to your existing Building Management System for unified control.</p>
+                    </div>
+                    <div class="power-pillar pillar-gold">
+                        <div class="emblem-badge" style="border-color: #FFD700; color: #FFD700;">G7</div>
+                        <h4 style="color: white; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;">GOLD</h4>
+                        <div style="color: rgba(255,255,255,0.5); font-size: 0.65rem; letter-spacing: 2px; margin-bottom: 16px;">OPTIMISATION</div>
+                        <div style="font-size: 1.3rem; font-weight: 300; color: #FFD700; letter-spacing: 1px; margin-bottom: 10px;">Setpoint Control</div>
+                        <p style="font-size: 0.78rem; color: rgba(255,255,255,0.55); line-height: 1.7;">AI-driven setpoint orchestration actively optimises HVAC parameters for maximum efficiency.</p>
+                    </div>
+                    <div class="power-pillar pillar-platinum">
+                        <div class="emblem-badge" style="background: white; color: var(--color-deep-sage); border: none;">P9</div>
+                        <h4 style="color: white; letter-spacing: 2px; font-size: 0.9rem; font-weight: 600;">PLATINUM</h4>
+                        <div style="color: rgba(255,255,255,0.5); font-size: 0.65rem; letter-spacing: 2px; margin-bottom: 16px;">FULL AUTONOMY</div>
+                        <div style="font-size: 1.3rem; font-weight: 300; color: #E5E4E2; letter-spacing: 1px; margin-bottom: 10px;">Autopilot</div>
+                        <p style="font-size: 0.78rem; color: rgba(255,255,255,0.55); line-height: 1.7;">Fully autonomous AI management with guaranteed energy savings and continuous strategic audits.</p>
+                    </div>
+                </div>
+
+                <!-- HVAC DYNAMIC SCHEMATIC (Integrated from Dashboard) -->
+                <div style="text-align: center; margin-top: 100px; margin-bottom: 40px;">
+                    <h2 style="font-size: 1.8rem; letter-spacing: 4px; color: var(--color-deep-sage); opacity: 0.8;">
+                        CORE SYSTEM SCHEMATIC</h2>
+                    <p style="opacity: 0.4; margin-top: 10px; letter-spacing: 3px; font-size: 0.65rem;">REAL-TIME
+                        THERMODYNAMIC FLOW ORCHESTRATION</p>
+                </div>
+
+                <div class="schematic-viewport">
+                    <svg viewBox="0 0 1400 660" xmlns="http://www.w3.org/2000/svg" class="schematic-svg">
+                        <!-- Arrowhead markers -->
+                        <defs>
+                            <marker id="arrow-cw" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <path d="M0,0 L8,3 L0,6" fill="#E5C07B" />
+                            </marker>
+                            <marker id="arrow-chw" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <path d="M0,0 L8,3 L0,6" fill="#A7F3D0" />
+                            </marker>
+                            <marker id="arrow-sa" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <path d="M0,0 L8,3 L0,6" fill="#13ec5b" />
+                            </marker>
+                            <marker id="arrow-ra" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <path d="M0,0 L8,3 L0,6" fill="#94a3b8" />
+                            </marker>
+                        </defs>
+
+                        <!-- Section backgrounds -->
+                        <rect x="10" y="40" width="620" height="580" rx="16" fill="rgba(255,255,255,0.01)"
+                            stroke="rgba(255,255,255,0.05)" stroke-dasharray="6 4" />
+                        <rect x="640" y="40" width="750" height="580" rx="16" fill="rgba(255,255,255,0.01)"
+                            stroke="rgba(255,255,255,0.05)" stroke-dasharray="6 4" />
+
+                        <!-- Section labels -->
+                        <text x="320" y="28" class="section-label" fill="white" font-size="12" letter-spacing="4px"
+                            opacity="0.6">WATER SIDE</text>
+                        <text x="1015" y="28" class="section-label" fill="white" font-size="12" letter-spacing="4px"
+                            opacity="0.6">AIR SIDE</text>
+
+                        <!-- Sub-labels -->
+                        <text x="160" y="70" class="sub-label cw-text">Condenser Water Loop</text>
+                        <text x="420" y="70" class="sub-label chw-text">Chilled Water Loop</text>
+
+                        <!-- ============ WATER SIDE EQUIPMENT ============ -->
+
+                        <!-- Cooling Tower -->
+                        <g class="equip-node" id="node-ct">
+                            <rect x="55" y="95" width="180" height="75" rx="12" class="equip-box node-box" />
+                            <text x="145" y="127" class="equip-label">Cooling Tower</text>
+                            <text x="145" y="148" class="equip-id">CT-01</text>
+                            <circle cx="80" cy="110" r="5" fill="#13ec5b" class="status-indicator" />
+                        </g>
+
+                        <!-- Condenser Water Pump -->
+                        <g class="equip-node" id="node-cwp">
+                            <rect x="75" y="265" width="150" height="55" rx="10" class="equip-box node-box" />
+                            <text x="150" y="290" class="equip-label">CW Pump</text>
+                            <text x="150" y="308" class="equip-id">CWP-01</text>
+                            <circle cx="98" cy="280" r="5" fill="#13ec5b" class="status-indicator" />
+                        </g>
+
+                        <!-- Chiller 1 -->
+                        <g class="equip-node" id="node-chiller">
+                            <rect x="310" y="110" width="260" height="120" rx="14" class="equip-box node-box" />
+                            <text x="440" y="150" class="equip-label-lg">Chiller #1</text>
+                            <text x="440" y="170" class="equip-id">CHL-01</text>
+                            <!-- Internal zones -->
+                            <line x1="440" y1="115" x2="440" y2="225" stroke="rgba(255,255,255,0.06)" stroke-width="1"
+                                stroke-dasharray="4 3" />
+                            <text x="375" y="215" class="equip-zone">Condenser</text>
+                            <text x="510" y="215" class="equip-zone">Evaporator</text>
+                            <circle cx="335" cy="128" r="5" fill="#13ec5b" class="status-indicator" />
+                        </g>
+
+                        <!-- Chiller 2 (NEW) -->
+                        <g class="equip-node" id="node-chiller2">
+                            <rect x="310" y="250" width="260" height="120" rx="14" class="equip-box node-box" />
+                            <text x="440" y="290" class="equip-label-lg">Chiller #2</text>
+                            <text x="440" y="310" class="equip-id">CHL-02</text>
+                            <line x1="440" y1="255" x2="440" y2="365" stroke="rgba(255,255,255,0.06)" stroke-width="1"
+                                stroke-dasharray="4 3" />
+                            <text x="375" y="355" class="equip-zone">Condenser</text>
+                            <text x="510" y="355" class="equip-zone">Evaporator</text>
+                            <circle cx="335" cy="268" r="5" fill="#13ec5b" class="status-indicator" />
+                        </g>
+
+                        <!-- Chilled Water Pump -->
+                        <g class="equip-node" id="node-chwp">
+                            <rect x="370" y="430" width="150" height="55" rx="10" class="equip-box node-box" />
+                            <text x="445" y="455" class="equip-label">CHW Pump</text>
+                            <text x="445" y="473" class="equip-id">CHWP-01</text>
+                            <circle cx="393" cy="445" r="5" fill="#13ec5b" class="status-indicator" />
+                        </g>
+
+                        <!-- Expansion Tank -->
+                        <g class="equip-node" id="node-tank">
+                            <rect x="130" y="510" width="145" height="48" rx="8" class="equip-box node-box" />
+                            <text x="202" y="538" class="equip-label-sm">Expansion Tank</text>
+                        </g>
+
+                        <!-- ============ AIR SIDE EQUIPMENT ============ -->
+
+                        <!-- Outside Air Intake -->
+                        <g class="equip-node" id="node-oa">
+                            <rect x="735" y="58" width="145" height="42" rx="8" class="equip-box node-box" />
+                            <text x="808" y="84" class="equip-label-sm">Outside Air</text>
+                        </g>
+
+                        <!-- AHU -->
+                        <g class="equip-node" id="node-ahu">
+                            <rect x="680" y="120" width="330" height="220" rx="14" class="equip-box node-box" />
+                            <text x="845" y="146" class="equip-label-lg">Air Handling Unit</text>
+                            <text x="845" y="162" class="equip-id">AHU-01</text>
+                            <circle cx="705" cy="138" r="5" fill="#13ec5b" class="status-indicator" />
+
+                            <rect x="700" y="178" width="90" height="48" rx="8" class="equip-sub" />
+                            <text x="745" y="200" class="equip-sub-label">Filter</text>
+                            <text x="745" y="216" class="equip-sub-hint">MERV-13</text>
+
+                            <rect x="808" y="178" width="95" height="48" rx="8" class="equip-sub" />
+                            <text x="855" y="200" class="equip-sub-label">Cooling Coil</text>
+                            <text x="855" y="216" class="equip-sub-hint">6/12°C</text>
+
+                            <rect x="808" y="240" width="95" height="42" rx="8" class="equip-sub" />
+                            <text x="855" y="260" class="equip-sub-label">Heating Coil</text>
+                            <text x="855" y="274" class="equip-sub-hint">45/60°C</text>
+
+                            <rect x="920" y="185" width="75" height="62" rx="8" class="equip-sub" />
+                            <text x="958" y="213" class="equip-sub-label">Supply Fan</text>
+                            <text x="958" y="237" class="equip-sub-hint">VFD</text>
+
+                            <path d="M792,202 L806,202" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"
+                                marker-end="url(#arrow-sa)" opacity="0.5" />
+                            <path d="M905,210 L918,210" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"
+                                marker-end="url(#arrow-sa)" opacity="0.5" />
+                        </g>
+
+                        <!-- Fresh Air Unit -->
+                        <g class="equip-node" id="node-fau">
+                            <rect x="680" y="380" width="155" height="55" rx="10" class="equip-box node-box" />
+                            <text x="758" y="405" class="equip-label">Fresh Air Unit</text>
+                            <text x="758" y="423" class="equip-id">FAU-01</text>
+                            <circle cx="703" cy="395" r="5" fill="#f59e0b" class="status-indicator" />
+                        </g>
+
+                        <!-- FCU -->
+                        <g class="equip-node" id="node-fcu">
+                            <rect x="680" y="465" width="155" height="48" rx="10" class="equip-box node-box" />
+                            <text x="758" y="493" class="equip-label-sm">Fan Coil Unit</text>
+                            <text x="758" y="505" class="equip-id">FCU-01~12</text>
+                        </g>
+
+                        <!-- Supply Duct -->
+                        <g class="equip-node" id="node-duct">
+                            <rect x="1065" y="165" width="145" height="55" rx="10" class="equip-box node-box" />
+                            <text x="1138" y="190" class="equip-label">Supply Duct</text>
+                            <text x="1138" y="208" class="equip-sub-hint">VAV System</text>
+                        </g>
+
+                        <!-- VAV Box 1 -->
+                        <g class="equip-node" id="node-vav1">
+                            <rect x="1065" y="310" width="120" height="48" rx="8" class="equip-box node-box" />
+                            <text x="1125" y="333" class="equip-label-sm">VAV Terminal</text>
+                            <text x="1125" y="349" class="equip-id">VAV-01</text>
+                        </g>
+
+                        <!-- VAV Box 2 -->
+                        <g class="equip-node" id="node-vav2">
+                            <rect x="1240" y="310" width="120" height="48" rx="8" class="equip-box node-box" />
+                            <text x="1300" y="333" class="equip-label-sm">VAV Terminal</text>
+                            <text x="1300" y="349" class="equip-id">VAV-02</text>
+                        </g>
+
+                        <!-- Zone 1 -->
+                        <g class="equip-node" id="node-zone1">
+                            <rect x="1055" y="440" width="140" height="60" rx="12" class="equip-box node-box" />
+                            <text x="1125" y="468" class="equip-label">Zone / Room</text>
+                            <text x="1125" y="488" class="equip-id">Zone A</text>
+                        </g>
+
+                        <!-- Zone 2 -->
+                        <g class="equip-node" id="node-zone2">
+                            <rect x="1230" y="440" width="140" height="60" rx="12" class="equip-box node-box" />
+                            <text x="1300" y="468" class="equip-label">Zone / Room</text>
+                            <text x="1300" y="488" class="equip-id">Zone B</text>
+                        </g>
+
+                        <!-- Return Duct -->
+                        <g class="equip-node" id="node-return">
+                            <rect x="1090" y="555" width="145" height="48" rx="10" class="equip-box node-box" />
+                            <text x="1163" y="583" class="equip-label-sm">Return Duct</text>
+                        </g>
+
+                        <!-- Exhaust Air -->
+                        <g class="equip-node" id="node-exhaust">
+                            <rect x="870" y="555" width="130" height="48" rx="10" class="equip-box node-box" />
+                            <text x="935" y="578" class="equip-label-sm">Exhaust Air</text>
+                            <text x="935" y="594" class="equip-id">EF-01</text>
+                        </g>
+
+                        <!-- ============ FLOW CONNECTIONS ============ -->
+
+                        <!-- CW LOOP -->
+                        <path d="M310,150 L280,150 L280,132 L235,132" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M310,150 L280,150 L280,132 L235,132" class="flow-core flow-cw"
+                            marker-end="url(#arrow-cw)" />
+
+                        <path d="M310,290 L280,290 L280,150" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M310,290 L280,290 L280,150" class="flow-core flow-cw" />
+
+                        <path d="M145,170 L145,265" class="pipe-line" style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M145,170 L145,265" class="flow-core flow-cw" marker-end="url(#arrow-cw)" />
+
+                        <path d="M225,292 L250,292 L250,190" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M225,292 L250,292 L250,190" class="flow-core flow-cw" />
+
+                        <path d="M250,190 L310,190" class="pipe-line" style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M250,190 L310,190" class="flow-core flow-cw" marker-end="url(#arrow-cw)" />
+
+                        <path d="M250,292 L250,330 L310,330" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M250,292 L250,330 L310,330" class="flow-core flow-cw" marker-end="url(#arrow-cw)" />
+
+                        <!-- CHW LOOP -->
+                        <path d="M570,170 L600,170 L600,380" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M570,170 L600,170 L600,380" class="flow-core flow-chw" />
+
+                        <path d="M570,310 L600,310 L600,380" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M570,310 L600,310 L600,380" class="flow-core flow-chw" />
+
+                        <path d="M600,380 L600,457 L520,457" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M600,380 L600,457 L520,457" class="flow-core flow-chw" marker-end="url(#arrow-chw)" />
+
+                        <path d="M370,457 L350,457 L350,534 L275,534" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" stroke-dasharray="4 4" />
+                        <path d="M370,457 L350,457 L350,534 L275,534" class="flow-core flow-chw" opacity="0.3"
+                            stroke-dasharray="4 4" />
+
+                        <path d="M520,457 L620,457 L620,200 L700,200" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M520,457 L620,457 L620,200 L700,200" class="flow-core flow-chw"
+                            marker-end="url(#arrow-chw)" />
+
+                        <path d="M700,220 L650,220 L650,430 L630,430" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M700,220 L650,220 L650,430 L630,430" class="flow-core flow-chw" opacity="0.6" />
+
+                        <path d="M630,430 L630,210 L570,210" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M630,430 L630,210 L570,210" class="flow-core flow-chw" marker-end="url(#arrow-chw)"
+                            opacity="0.6" />
+
+                        <path d="M630,430 L630,350 L570,350" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M630,430 L630,350 L570,350" class="flow-core flow-chw" marker-end="url(#arrow-chw)"
+                            opacity="0.6" />
+
+                        <path d="M620,415 L620,489 L680,489" class="pipe-line"
+                            style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M620,415 L620,489 L680,489" class="flow-core flow-chw" marker-end="url(#arrow-chw)"
+                            opacity="0.5" />
+
+                        <!-- SA FLOW -->
+                        <path d="M808,100 L808,120" class="pipe-line" style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M808,100 L808,120" class="flow-core flow-sa" marker-end="url(#arrow-sa)" />
+
+                        <path d="M1010,215 L1065,192" class="pipe-line" style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M1010,215 L1065,192" class="flow-core flow-sa" marker-end="url(#arrow-sa)" />
+
+                        <path d="M1125,220 L1125,310" class="pipe-line" style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M1125,220 L1125,310" class="flow-core flow-sa" marker-end="url(#arrow-sa)" />
+
+                        <path d="M1180,220 L1300,310" class="pipe-line" style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M1180,220 L1300,310" class="flow-core flow-sa" marker-end="url(#arrow-sa)" />
+
+                        <path d="M1125,358 L1125,440" class="pipe-line" style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M1125,358 L1125,440" class="flow-core flow-sa" marker-end="url(#arrow-sa)" />
+
+                        <path d="M1300,358 L1300,440" class="pipe-line" style="stroke: rgba(255,255,255,0.08);" />
+                        <path d="M1300,358 L1300,440" class="flow-core flow-sa" marker-end="url(#arrow-sa)" />
+
+                        <!-- RA FLOW -->
+                        <path d="M1125,500 L1163,555" class="flow-core flow-ra" marker-end="url(#arrow-ra)" />
+                        <path d="M1300,500 L1200,555" class="flow-core flow-ra" marker-end="url(#arrow-ra)" />
+                        <path d="M1090,579 L1000,579" class="flow-core flow-ra" marker-end="url(#arrow-ra)" />
+                        <path d="M870,579 L850,579 L850,340 L760,340" class="flow-core flow-ra"
+                            marker-end="url(#arrow-ra)" />
+                        <text x="825" y="335" class="annotation-text">Recirculate</text>
+
+                        <!-- ============ FLOW LABELS ============ -->
+                        <text x="120" y="225" class="sub-label cw-text" transform="rotate(-90,120,225)">CW Supply</text>
+                        <text x="145" y="90" class="sub-label cw-text">CW Return</text>
+                        <text x="560" y="180" class="sub-label chw-text" transform="rotate(-90,560,180)">CHW
+                            Supply</text>
+                        <text x="560" y="320" class="sub-label chw-text" transform="rotate(-90,560,320)">CHW
+                            Supply</text>
+                        <text x="665" y="330" class="sub-label chw-text" transform="rotate(-90,665,330)">CHW
+                            Return</text>
+                        <text x="1040" y="235" class="annotation-text" fill="#13ec5b">Supply →</text>
+
+                        <g class="annotation">
+                            <text x="440" y="102" class="annotation-text">CW: 32→37°C</text>
+                            <text x="440" y="242" class="annotation-text">CW: 32→37°C</text>
+                            <text x="610" y="300" class="annotation-text" transform="rotate(90,610,300)">CHW: 7°C</text>
+                            <text x="640" y="300" class="annotation-text" transform="rotate(90,640,300)">Return:
+                                12°C</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- RECOGNITION & NEWS -->
+        <section class="section-padding" style="background: white; border-top: 1px solid rgba(44,62,53,0.08);">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 70px;">
+                    <div class="technical-mono" style="text-align:center; margin-bottom: 16px;">RECOGNITION</div>
+                    <h2 style="font-size: 2.22rem; letter-spacing: 4px; color: var(--color-deep-sage);">IN THE NEWS</h2>
+                    <p style="opacity: 0.5; margin-top: 12px; font-size: 0.75rem; letter-spacing: 3px;">GOVERNMENT-BACKED. INDUSTRY-RECOGNISED.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: center;">
+
+                    <!-- Left: Grant Highlight Card -->
+                    <div style="background: var(--color-deep-sage); border-radius: 24px; padding: 50px 44px; position: relative; overflow: hidden;">
+                        <!-- Background accent -->
+                        <div style="position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(19,236,91,0.12), transparent 70%); pointer-events:none;"></div>
+
+                        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 32px;">
+                            <div style="width: 42px; height: 42px; border-radius: 50%; background: rgba(19,236,91,0.15); border: 1px solid rgba(19,236,91,0.3); display: flex; align-items: center; justify-content: center; flex-shrink:0;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="#13ec5b" stroke-width="2" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.6rem; letter-spacing: 3px; color: var(--color-porsche-green); margin-bottom: 3px;">GRANT AWARDED</div>
+                                <div style="font-size: 0.8rem; color: rgba(255,255,255,0.6); letter-spacing: 1px;">Australia–Singapore GGCIP</div>
+                            </div>
+                        </div>
+
+                        <h3 style="font-size: 1.55rem; font-weight: 300; color: white; line-height: 1.4; margin-bottom: 24px; letter-spacing: 0.5px;">
+                            Go-Green Co&#8209;Innovation Program<br>
+                            <span style="color: var(--color-porsche-green); font-weight: 600;">Grant Recipient</span>
+                        </h3>
+
+                        <p style="font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.8; margin-bottom: 32px;">
+                            Retragreen Pty Ltd — Australia has been awarded a grant under the Australia–Singapore Green Economy Agreement, recognising our leadership in AI-powered energy optimisation and ESG-aligned digital solutions.
+                        </p>
+
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px;">
+                            <span style="padding: 7px 16px; border-radius: 99px; background: rgba(19,236,91,0.1); border: 1px solid rgba(19,236,91,0.25); font-size: 0.68rem; letter-spacing: 1px; color: var(--color-porsche-green);">AI-Powered BMS</span>
+                            <span style="padding: 7px 16px; border-radius: 99px; background: rgba(19,236,91,0.1); border: 1px solid rgba(19,236,91,0.25); font-size: 0.68rem; letter-spacing: 1px; color: var(--color-porsche-green);">ESG Compliance</span>
+                            <span style="padding: 7px 16px; border-radius: 99px; background: rgba(19,236,91,0.1); border: 1px solid rgba(19,236,91,0.25); font-size: 0.68rem; letter-spacing: 1px; color: var(--color-porsche-green);">Net-Zero Enablement</span>
+                            <span style="padding: 7px 16px; border-radius: 99px; background: rgba(19,236,91,0.1); border: 1px solid rgba(19,236,91,0.25); font-size: 0.68rem; letter-spacing: 1px; color: var(--color-porsche-green);">SE Asia Expansion</span>
+                        </div>
+
+                        <!-- Stat row -->
+                        <div style="display: flex; gap: 28px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08);">
+                            <div>
+                                <div style="font-size: 1.6rem; font-weight: 200; color: var(--color-porsche-green); line-height: 1;">25%</div>
+                                <div style="font-size: 0.62rem; letter-spacing: 2px; color: rgba(255,255,255,0.35); margin-top: 5px;">MAX ELECTRICITY SAVINGS</div>
+                            </div>
+                            <div style="width: 1px; background: rgba(255,255,255,0.08);"></div>
+                            <div>
+                                <div style="font-size: 1.6rem; font-weight: 200; color: var(--color-porsche-green); line-height: 1;">3+</div>
+                                <div style="font-size: 0.62rem; letter-spacing: 2px; color: rgba(255,255,255,0.35); margin-top: 5px;">MARKETS: MY · SG · AU</div>
+                            </div>
+                            <div style="width: 1px; background: rgba(255,255,255,0.08);"></div>
+                            <div>
+                                <div style="font-size: 1.6rem; font-weight: 200; color: var(--color-porsche-green); line-height: 1;">EECA</div>
+                                <div style="font-size: 0.62rem; letter-spacing: 2px; color: rgba(255,255,255,0.35); margin-top: 5px;">MALAYSIA COMPLIANT</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Testimonial / Government Endorsement -->
+                    <div style="display: flex; flex-direction: column; gap: 28px;">
+
+                        <!-- Quote block -->
+                        <div style="position: relative; padding: 36px 36px 36px 52px; border-radius: 18px; background: var(--color-chalk-light); border: 1px solid rgba(44,62,53,0.1); border-left: 3px solid var(--color-porsche-green);">
+                            <div style="position: absolute; left: 20px; top: 30px; font-size: 2.8rem; color: var(--color-porsche-green); line-height: 1; opacity: 0.5; font-family: Georgia, serif;">"</div>
+                            <p style="font-size: 0.9rem; color: var(--color-titanium); line-height: 1.85; font-style: italic;">
+                                Retragreen is an innovator in AI-powered energy optimization and ESG-aligned digital solutions, helping businesses across the region reduce energy consumption, enhance operational efficiency, and achieve net-zero targets.
+                            </p>
+                            <div style="margin-top: 20px; display: flex; align-items: center; gap: 14px;">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--color-deep-sage); display: flex; align-items: center; justify-content: center; flex-shrink:0;">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="white" stroke-width="1.5" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.82rem; font-weight: 600; color: var(--color-deep-sage);">Aaron Williams</div>
+                                    <div style="font-size: 0.72rem; color: var(--color-titanium); opacity: 0.7; margin-top: 2px;">Deputy Commissioner – SE Asia, Government of Victoria</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3 key highlight points -->
+                        <div style="display: flex; flex-direction: column; gap: 16px;">
+                            <div style="display: flex; gap: 16px; align-items: flex-start; padding: 20px 22px; border-radius: 14px; background: var(--color-chalk-light); border: 1px solid rgba(44,62,53,0.08);">
+                                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(19,236,91,0.12); border: 1px solid rgba(19,236,91,0.2); display: flex; align-items: center; justify-content: center; flex-shrink:0;">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="#13ec5b" stroke-width="2" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.8rem; font-weight: 600; color: var(--color-deep-sage); margin-bottom: 4px;">Real-time BMS Intelligence</div>
+                                    <div style="font-size: 0.78rem; color: var(--color-titanium); opacity: 0.75; line-height: 1.6;">AI-driven monitoring and intelligent HVAC, lighting & energy-intensive systems control — seamlessly integrated with existing infrastructure.</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 16px; align-items: flex-start; padding: 20px 22px; border-radius: 14px; background: var(--color-chalk-light); border: 1px solid rgba(44,62,53,0.08);">
+                                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(19,236,91,0.12); border: 1px solid rgba(19,236,91,0.2); display: flex; align-items: center; justify-content: center; flex-shrink:0;">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="#13ec5b" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.8rem; font-weight: 600; color: var(--color-deep-sage); margin-bottom: 4px;">SE Asia Market Expansion</div>
+                                    <div style="font-size: 0.78rem; color: var(--color-titanium); opacity: 0.75; line-height: 1.6;">Actively deploying in shopping centres, hotels, and large-scale commercial buildings across Malaysia and Singapore.</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 16px; align-items: flex-start; padding: 20px 22px; border-radius: 14px; background: var(--color-chalk-light); border: 1px solid rgba(44,62,53,0.08);">
+                                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(19,236,91,0.12); border: 1px solid rgba(19,236,91,0.2); display: flex; align-items: center; justify-content: center; flex-shrink:0;">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="#13ec5b" stroke-width="2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.8rem; font-weight: 600; color: var(--color-deep-sage); margin-bottom: 4px;">VGTI SEA Endorsed</div>
+                                    <div style="font-size: 0.78rem; color: var(--color-titanium); opacity: 0.75; line-height: 1.6;">Supported by the Victorian Government Trade and Investment Southeast Asia office, fostering collaboration between Victorian innovation and green economy growth.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Technical Questionnaire -->
+        <section class="section-padding bg-malachite-depth" id="contact"
+            style="border-top: 1px solid rgba(255,255,255,0.05);">
+            <div class="container">
+                <div class="questionnaire-box"
+                    style="position: relative; overflow: hidden; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 80px 40px; border-radius: 24px; backdrop-filter: blur(10px);">
+                    <div style="position: relative; z-index: 5;">
+                        <h2 style="font-size: 2.3rem; color: white; margin-bottom: 20px; font-weight: 300;">
+                            TECHNICAL <span class="accent-porsche-green">QUESTIONNAIRE</span></h2>
+                        <p
+                            style="opacity: 0.7; color: white; margin-bottom: 40px; font-weight: 300; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.8;">
+                            Our audit process begins with your data. Help us understand your current facility
+                            infrastructure
+                            by completing our professional technical questionnaire.</p>
+                        <button class="btn-metallic"
+                            onclick="window.open('https://docs.google.com/forms/d/1ut7TWXRwCqJJN9dIvaxXygU80DmviZ6j7Z58aazGtiY/viewform', '_blank')">START
+                            TECHNICAL AUDIT</button>
+                        <p style="font-size: 0.7rem; margin-top: 20px; opacity: 0.5; color: white;">Est. time: 5-8
+                            minutes.
+                            Secure SSL
+                            compliant form.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LET'S CONNECT — Contact + Footer -->
+        <footer class="bg-malachite-depth" id="contact" style="border-top: 1px solid rgba(255,255,255,0.08);">
+            <!-- Contact Section -->
+            <div class="section-padding" style="padding-bottom: 60px;">
+                <div class="container">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start;">
+                        <!-- Left: Info -->
+                        <div>
+                            <div class="technical-mono" style="margin-bottom: 20px;">GET IN TOUCH</div>
+                            <h2 style="font-size: 3rem; font-weight: 300; color: white; line-height: 1.1; margin-bottom: 30px;">LET'S <span class="accent-porsche-green">CONNECT</span></h2>
+                            <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.8; margin-bottom: 50px; max-width: 420px;">Custom tech solutions, designed to power your business. Reach out to learn how Retragreen can transform your facility's energy intelligence.</p>
+
+                            <div style="display: flex; flex-direction: column; gap: 24px;">
+                                <div style="display: flex; align-items: flex-start; gap: 16px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    </div>
+                                    <div>
+                                        <p style="font-size: 0.7rem; letter-spacing: 2px; opacity: 0.4; color: white; margin-bottom: 4px;">ADDRESS</p>
+                                        <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; line-height: 1.6;">Unit 2 / 42 Sabre Drive<br>Port Melbourne, VIC 3207</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 16px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                    </div>
+                                    <div>
+                                        <p style="font-size: 0.7rem; letter-spacing: 2px; opacity: 0.4; color: white; margin-bottom: 4px;">EMAIL</p>
+                                        <a href="/cdn-cgi/l/email-protection#7d2d1c090f141e163d0f18090f1c1a0f181813531e1210531c08" style="color: rgba(255,255,255,0.8); font-size: 0.9rem; text-decoration: none;"><span class="__cf_email__" data-cfemail="f1a190858398929ab18394858390968394949fdf929e9cdf9084">[email&#160;protected]</span></a>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 16px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.23h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.87a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <p style="font-size: 0.7rem; letter-spacing: 2px; opacity: 0.4; color: white; margin-bottom: 4px;">PHONE</p>
+                                        <a href="tel:0438863499" style="color: rgba(255,255,255,0.8); font-size: 0.9rem; text-decoration: none;">0438 863 499</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Contact Form -->
+                        <div>
+                            <form style="display: flex; flex-direction: column; gap: 16px;" onsubmit="handleFormSubmit(event)">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                    <div>
+                                        <input type="text" placeholder="First Name" required
+                                            style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); padding: 16px 20px; border-radius: 12px; color: white; font-family: inherit; font-size: 0.9rem; outline: none; transition: border-color 0.3s ease;"
+                                            onfocus="this.style.borderColor='rgba(19,236,91,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+                                    </div>
+                                    <div>
+                                        <input type="text" placeholder="Last Name" required
+                                            style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); padding: 16px 20px; border-radius: 12px; color: white; font-family: inherit; font-size: 0.9rem; outline: none; transition: border-color 0.3s ease;"
+                                            onfocus="this.style.borderColor='rgba(19,236,91,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+                                    </div>
+                                </div>
+                                <input type="email" placeholder="Email Address" required
+                                    style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); padding: 16px 20px; border-radius: 12px; color: white; font-family: inherit; font-size: 0.9rem; outline: none; transition: border-color 0.3s ease;"
+                                    onfocus="this.style.borderColor='rgba(19,236,91,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+                                <textarea placeholder="Message" rows="5" required
+                                    style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); padding: 16px 20px; border-radius: 12px; color: white; font-family: inherit; font-size: 0.9rem; outline: none; resize: vertical; transition: border-color 0.3s ease;"
+                                    onfocus="this.style.borderColor='rgba(19,236,91,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'"></textarea>
+                                <button type="submit" class="btn-metallic" style="align-self: flex-start; padding: 16px 40px;">SEND MESSAGE</button>
+                                <p id="formSuccessMsg" style="display:none; color: var(--color-porsche-green); font-size: 0.85rem; letter-spacing: 1px;">✓ Thanks for submitting! We'll be in touch shortly.</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div style="border-top: 1px solid rgba(255,255,255,0.08); padding: 30px 0;">
+                <div class="container">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                        <span style="font-size: 0.65rem; letter-spacing: 2px; opacity: 0.35; color: white;">© 2025 RETRAGREEN PTY LTD — ABN REGISTERED IN AUSTRALIA</span>
+                        <div style="display: flex; gap: 30px;">
+                            <a href="https://www.linkedin.com/company/retragreen-pty-ltd/posts/?feedView=all" target="_blank"
+                                style="text-decoration: none; color: white; font-size: 0.65rem; letter-spacing: 2px; opacity: 0.35; transition: opacity 0.3s;"
+                                onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='0.35'">LINKEDIN</a>
+                            <a href="https://www.youtube.com/@Retragreen" target="_blank"
+                                style="text-decoration: none; color: white; font-size: 0.65rem; letter-spacing: 2px; opacity: 0.35; transition: opacity 0.3s;"
+                                onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='0.35'">YOUTUBE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Equipment Detail Modal -->
+    <div class="modal-overlay" id="equipModal">
+        <div class="modal glass-modal" style="max-width: 500px;">
+            <div class="equip-detail-header">
+                <div>
+                    <h2 class="equip-id-large" id="equipModalTitle">Equipment Title</h2>
+                    <div class="header-subtitle" id="equipModalId">EQUIP-ID</div>
+                </div>
+                <div class="equip-status-badge online" id="equipModalStatus">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Online</span>
+                </div>
+                <button class="modal-close" id="equipModalClose" title="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="equip-params-grid" id="equipModalParams">
+                    <!-- Dynamic rendering by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // System Schematic Interaction Engine
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('equipModal');
+            const closeBtn = document.getElementById('equipModalClose');
+            const paramsGrid = document.getElementById('equipModalParams');
+
+            // Open Modal Handler
+            function openParamDash(nodeId, title, subId) {
+                document.getElementById('equipModalTitle').textContent = title;
+                document.getElementById('equipModalId').textContent = subId;
+
+                // Clear previous
+                paramsGrid.innerHTML = '';
+
+                // Generate contextual simulation parameters based on equipment class
+                let params = [];
+                if (subId.includes('CHL')) {
+                    params = [
+                        { label: 'Power Draw', value: (Math.random() * 40 + 20).toFixed(1), unit: 'kW' },
+                        { label: 'COP Efficiency', value: (Math.random() * 1.5 + 4.0).toFixed(2), unit: '' },
+                        { label: 'Chilled Water Outlet', value: (Math.random() * 2 + 6).toFixed(1), unit: '°C' },
+                        { label: 'Condenser Loading', value: (Math.random() * 30 + 60).toFixed(0), unit: '%' }
+                    ];
+                } else if (subId.includes('AHU') || subId.includes('FAU')) {
+                    params = [
+                        { label: 'Supply Fan Speed (VFD)', value: (Math.random() * 20 + 70).toFixed(0), unit: 'Hz' },
+                        { label: 'Valve Position', value: (Math.random() * 40 + 50).toFixed(0), unit: '%' },
+                        { label: 'Discharge Air Temp', value: (Math.random() * 3 + 12).toFixed(1), unit: '°C' },
+                        { label: 'Static Pressure', value: (Math.random() * 100 + 400).toFixed(0), unit: 'Pa' }
+                    ];
+                } else {
+                    params = [
+                        { label: 'Operating Status', value: 'Active', unit: '' },
+                        { label: 'Flow Rate', value: (Math.random() * 50 + 100).toFixed(1), unit: 'L/s' },
+                        { label: 'Pressure Differential', value: (Math.random() * 20 + 100).toFixed(1), unit: 'kPa' },
+                        { label: 'Current Draw', value: (Math.random() * 10 + 5).toFixed(1), unit: 'A' }
+                    ];
+                }
+
+                params.forEach(p => {
+                    paramsGrid.innerHTML += `
+                        <div class="param-item">
+                            <span class="param-label">${p.label}</span>
+                            <div>
+                                <span class="param-value">${p.value}</span>
+                                <span class="param-unit">${p.unit}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Display Modal
+                modal.classList.add('active');
+            }
+
+            // Close Modal bindings
+            closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+            modal.addEventListener('mousedown', (e) => {
+                if (e.target === modal) modal.classList.remove('active');
+            });
+
+            // Bind click & spring effect to all topology nodes
+            const equipNodes = document.querySelectorAll('.equip-node');
+            equipNodes.forEach(node => {
+                node.addEventListener('click', () => {
+                    // Extract identity logic from DOM
+                    const titleEl = node.querySelector('.equip-label') || node.querySelector('.equip-label-lg') || node.querySelector('.equip-label-sm');
+                    const idEl = node.querySelector('.equip-id');
+
+                    const title = titleEl ? titleEl.textContent : 'HVAC Module';
+                    const eqId = idEl ? idEl.textContent : node.id.toUpperCase().replace('NODE-', '');
+
+                    openParamDash(node.id, title, eqId);
+                });
+            });
+        });
+
+        // ----------------------------------------------------------------
+        // Canvas Interconnected Network Engine (Hero Background)
+        // ----------------------------------------------------------------
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('techCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const heroSection = document.querySelector('.hero');
+
+            let width, height;
+            let particles = [];
+            let mouse = { x: null, y: null, radius: 250 };
+
+            function initCanvas() {
+                width = heroSection.clientWidth;
+                height = heroSection.clientHeight;
+
+                // Handle High-DPI Displays (Retina) for extra crispness
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = width * dpr;
+                canvas.height = height * dpr;
+                ctx.scale(dpr, dpr);
+
+                // Adjust particle count based on screen size (Density mapping)
+                const numParticles = Math.floor((width * height) / 13000);
+                particles = [];
+                for (let i = 0; i < numParticles; i++) {
+                    let rx = Math.random() * width;
+                    let ry = Math.random() * height;
+                    // Slow, deliberate floating
+                    let rvx = (Math.random() - 0.5) * 0.7;
+                    let rvy = (Math.random() - 0.5) * 0.7;
+                    let rRadius = Math.random() * 2 + 0.8;
+                    particles.push(new Particle(rx, ry, rvx, rvy, rRadius));
+                }
+            }
+
+            class Particle {
+                constructor(x, y, vx, vy, radius) {
+                    this.x = x;
+                    this.y = y;
+                    this.vx = vx;
+                    this.vy = vy;
+                    this.radius = radius;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    // Glowing nodes
+                    ctx.fillStyle = 'rgba(19, 236, 91, 0.6)';
+                    ctx.fill();
+                }
+                update() {
+                    // Bounce off walls
+                    if (this.x > width || this.x < 0) this.vx = -this.vx;
+                    if (this.y > height || this.y < 0) this.vy = -this.vy;
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    // Mouse magnetic effect (subtle attraction)
+                    if (mouse.x !== null) {
+                        let dx = mouse.x - this.x;
+                        let dy = mouse.y - this.y;
+                        let distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < mouse.radius) {
+                            const force = (mouse.radius - distance) / mouse.radius;
+                            this.x += (dx / distance) * force * 1.5;
+                            this.y += (dy / distance) * force * 1.5;
+                        }
+                    }
+                    this.draw();
+                }
+            }
+
+            function connectParticles() {
+                let opacity = 1;
+                for (let a = 0; a < particles.length; a++) {
+                    for (let b = a; b < particles.length; b++) {
+                        let distance = ((particles[a].x - particles[b].x) ** 2) + ((particles[a].y - particles[b].y) ** 2);
+
+                        // Network connectivity threshold
+                        if (distance < 16000) {
+                            opacity = 1 - (distance / 16000);
+                            ctx.strokeStyle = `rgba(19, 236, 91, ${opacity * 0.25})`; // Porsche green links
+                            ctx.lineWidth = 0.8;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[a].x, particles[a].y);
+                            ctx.lineTo(particles[b].x, particles[b].y);
+                            ctx.stroke();
+                        }
+                    }
+
+                    // Connect to mouse pointer intensely
+                    if (mouse.x !== null) {
+                        let mDistance = ((mouse.x - particles[a].x) ** 2) + ((mouse.y - particles[a].y) ** 2);
+                        if (mDistance < 30000) {
+                            opacity = 1 - (mDistance / 30000);
+                            ctx.strokeStyle = `rgba(19, 236, 91, ${opacity * 0.5})`; // Thicker brighter mouse link
+                            ctx.lineWidth = 1.2;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[a].x, particles[a].y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animateCanvas() {
+                requestAnimationFrame(animateCanvas);
+                ctx.clearRect(0, 0, width, height);
+
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                }
+                connectParticles();
+            }
+
+            initCanvas();
+            animateCanvas();
+
+            // Event Listeners for Resize and Interaction
+            window.addEventListener('resize', initCanvas);
+
+            heroSection.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+            });
+
+            heroSection.addEventListener('mouseleave', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+        });
+    </script>
+    <script>
+        function handleFormSubmit(e) {
+            e.preventDef
