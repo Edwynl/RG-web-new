@@ -954,3 +954,310 @@ h3 {
     color: rgba(255,255,255,0.7) !important;
     opacity: 1 !important;
 }
+
+/* Mobile-first retrofit for inline-style heavy sections */
+@media (max-width: 1024px) {
+    .section-padding {
+        padding: 88px 0;
+    }
+
+    header.glass-panel {
+        width: calc(100% - 24px) !important;
+        top: 12px !important;
+        left: 12px !important;
+        transform: none !important;
+        padding: 12px 16px !important;
+        border-radius: 18px !important;
+        gap: 12px;
+    }
+
+    header.glass-panel nav ul {
+        gap: 8px !important;
+        font-size: 0.68rem !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    header.glass-panel .nav-pill {
+        padding: 7px 11px;
+    }
+
+    header.glass-panel>.btn-metallic {
+        padding: 10px 14px;
+        font-size: 0.68rem;
+        letter-spacing: 1px;
+    }
+
+    section.hero {
+        min-height: auto !important;
+        padding: 160px 24px 84px !important;
+    }
+
+    section.hero h1 {
+        font-size: clamp(2rem, 8vw, 3.8rem) !important;
+        line-height: 1.12 !important;
+    }
+
+    section.hero p {
+        letter-spacing: 3px !important;
+        margin-bottom: 36px !important;
+    }
+
+    section.hero .container>div[style*="display: flex; gap: 20px"] {
+        flex-wrap: wrap;
+    }
+
+    #about .container>div[style*="grid-template-columns: 1fr 1.5fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+    }
+
+    #services .container>div[style*="grid-template-columns: repeat(3, 1fr)"] {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 18px !important;
+    }
+
+    #services .service-card-hover {
+        padding: 28px !important;
+    }
+
+    .arch-layer {
+        padding: 20px 18px !important;
+    }
+
+    .arch-layer>div[style*="display: flex; align-items: flex-start; gap: 40px;"],
+    .arch-layer[style*="display: flex; align-items: center; gap: 40px;"] {
+        display: block !important;
+    }
+
+    .arch-layer>div[style*="display: flex; align-items: flex-start; gap: 40px;"]>div[style*="min-width: 180px"],
+    .arch-layer>div[style*="display: flex; align-items: center; gap: 40px;"]>div[style*="min-width: 180px"],
+    .arch-layer>div[style*="min-width: 180px"] {
+        min-width: 0 !important;
+        margin-bottom: 12px;
+    }
+
+    .arch-layer [style*="grid-template-columns: repeat(5, 1fr)"],
+    .arch-layer [style*="grid-template-columns: repeat(4, 1fr)"],
+    .arch-layer [style*="grid-template-columns: repeat(3, 1fr)"] {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    section .container>div[style*="grid-template-columns: 1fr 1.1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+    }
+
+    footer#contact .container>div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 50px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+
+    .section-padding {
+        padding: 70px 0;
+    }
+
+    header.glass-panel {
+        justify-content: center !important;
+    }
+
+    header.glass-panel nav,
+    header.glass-panel>.btn-metallic {
+        display: none !important;
+    }
+
+    header.glass-panel .logo {
+        font-size: 0.9rem !important;
+        letter-spacing: 1.5px !important;
+        text-align: center;
+    }
+
+    section.hero {
+        padding: 132px 16px 64px !important;
+    }
+
+    section.hero .container>div[style*="display: flex; gap: 20px"] {
+        flex-direction: column;
+        gap: 12px !important;
+        align-items: center;
+    }
+
+    section.hero .btn-metallic {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .partners-strip {
+        padding: 20px 0;
+    }
+
+    .partners-wrapper {
+        gap: 14px;
+    }
+
+    .partner-item {
+        font-size: 0.62rem;
+        letter-spacing: 1px;
+        opacity: 0.55;
+    }
+
+    /* Leadership Team: denser cards on mobile */
+    .team-grid {
+        gap: 14px;
+        margin-top: 30px;
+    }
+
+    .team-window {
+        padding: 26px 16px;
+        border-radius: 10px;
+    }
+
+    .member-avatar {
+        width: 46px;
+        height: 46px;
+        margin: 0 auto 14px;
+    }
+
+    .member-name {
+        font-size: 1rem;
+        margin-bottom: 4px;
+    }
+
+    .member-role {
+        font-size: 0.58rem;
+        letter-spacing: 2px;
+    }
+
+    /* System Topology: reduce blank space and card bulk */
+    .topology-vault {
+        gap: 16px;
+        padding: 24px 0 12px;
+    }
+
+    .device-node {
+        width: min(100%, 170px);
+        padding: 12px 10px;
+        border-radius: 8px;
+    }
+
+    .flow-line-v {
+        height: 20px;
+    }
+
+    .horizontal-bus {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    #architecture .topology-vault > div[style*="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;"] {
+        gap: 10px !important;
+    }
+
+    #architecture .topology-vault > div[style*="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;"] .device-node {
+        width: calc(50% - 8px) !important;
+        max-width: none;
+        min-width: 130px;
+    }
+
+    /* IN THE NEWS grant tag: keep full text visible on mobile */
+    section .container > div[style*="grid-template-columns: 1fr 1.1fr"] > div:first-child > div[style*="display: flex; align-items: center; gap: 14px; margin-bottom: 32px;"] {
+        align-items: flex-start !important;
+        gap: 10px !important;
+        margin-bottom: 20px !important;
+    }
+
+    section .container > div[style*="grid-template-columns: 1fr 1.1fr"] > div:first-child > div[style*="display: flex; align-items: center; gap: 14px; margin-bottom: 32px;"] > div:last-child {
+        min-width: 0;
+        flex: 1;
+    }
+
+    section .container > div[style*="grid-template-columns: 1fr 1.1fr"] > div:first-child > div[style*="display: flex; align-items: center; gap: 14px; margin-bottom: 32px;"] > div:last-child > div:last-child {
+        font-size: 0.72rem !important;
+        letter-spacing: 0.3px !important;
+        line-height: 1.35 !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    section .container > div[style*="grid-template-columns: 1fr 1.1fr"] > div:first-child > div[style*="display: flex; gap: 28px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08);"] {
+        flex-wrap: wrap !important;
+        gap: 14px 18px !important;
+        padding-top: 18px !important;
+    }
+
+    section .container > div[style*="grid-template-columns: 1fr 1.1fr"] > div:first-child > div[style*="display: flex; gap: 28px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08);"] > div[style*="width: 1px; background: rgba(255,255,255,0.08);"] {
+        display: none !important;
+    }
+
+    section .container > div[style*="grid-template-columns: 1fr 1.1fr"] > div:first-child > div[style*="display: flex; gap: 28px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08);"] > div {
+        min-width: 0;
+        flex: 1 1 calc(50% - 12px);
+    }
+
+    section .container > div[style*="grid-template-columns: 1fr 1.1fr"] > div:first-child > div[style*="display: flex; gap: 28px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08);"] > div > div:last-child {
+        font-size: 0.58rem !important;
+        letter-spacing: 1.1px !important;
+        line-height: 1.35 !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    h2 {
+        font-size: clamp(1.45rem, 6vw, 2rem) !important;
+        letter-spacing: 1px !important;
+    }
+
+    .technical-mono {
+        letter-spacing: 1px;
+        font-size: 0.68rem;
+    }
+
+    .monolith {
+        min-height: auto;
+        padding: 58px 24px;
+    }
+
+    #services .container>div[style*="grid-template-columns: repeat(3, 1fr)"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    .power-pillar {
+        padding: 34px 22px;
+    }
+
+    #plans .container>div[style*="margin-top: 100px"][style*="margin-bottom: 40px"],
+    .schematic-viewport {
+        display: none;
+    }
+
+    .questionnaire-box {
+        padding: 44px 20px !important;
+        border-radius: 16px !important;
+    }
+
+    .questionnaire-box h2 {
+        font-size: 1.55rem !important;
+    }
+
+    footer#contact form>div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    footer#contact .btn-metallic {
+        width: 100%;
+        align-self: stretch !important;
+    }
+
+    footer#contact [style*="justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;"] {
+        justify-content: center !important;
+        text-align: center;
+        gap: 12px !important;
+    }
+}
