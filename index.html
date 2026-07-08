@@ -137,7 +137,13 @@
                 <li><a href="#about" class="nav-pill">ABOUT</a></li>
                 <li><a href="#services" class="nav-pill">SERVICES</a></li>
                 <li><a href="#products" class="nav-pill">PRODUCTS</a></li>
-                <li><a href="#architecture" class="nav-pill">ARCHITECTURE</a></li>
+                <li class="nav-dropdown">
+                    <button class="nav-pill nav-dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">ARCHITECTURE</button>
+                    <div class="nav-dropdown-menu" role="menu" aria-label="Architecture pages">
+                        <a href="#architecture" role="menuitem" data-open-tech="technical-topology">SYSTEM TOPOLOGY</a>
+                        <a href="#architecture" role="menuitem" data-open-tech="technical-architecture">SYSTEM ARCHITECTURE</a>
+                    </div>
+                </li>
                 <li><a href="#plans" class="nav-pill">PLANS</a></li>
                 <li><a href="#contact" class="nav-pill">CONTACT</a></li>
             </ul>
@@ -320,31 +326,12 @@
 
         <!-- TECHNICAL LIBRARY -->
         <section id="architecture" class="section-padding bg-malachite-depth technical-library"
-            style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+            style="border-bottom: 1px solid rgba(255,255,255,0.05);" hidden>
             <div class="container">
                 <div class="technical-library-heading">
                     <div class="technical-mono" style="text-align:center; margin-bottom: 16px; color: var(--color-porsche-green);">TECHNICAL LIBRARY</div>
-                    <h2>PLATFORM TECHNICAL MENU</h2>
-                    <p>System topology and architecture details are available on demand for technical review without expanding the full engineering documentation on the homepage.</p>
-                </div>
-
-                <div class="technical-page-menu" role="tablist" aria-label="Technical content menu">
-                    <button class="technical-page-tab" type="button" data-tech-target="technical-topology" aria-controls="technical-topology" aria-expanded="false">
-                        <span>01</span>
-                        System Topology
-                    </button>
-                    <button class="technical-page-tab" type="button" data-tech-target="technical-architecture" aria-controls="technical-architecture" aria-expanded="false">
-                        <span>02</span>
-                        System Architecture
-                    </button>
-                </div>
-
-                <div class="technical-page-intro" id="technical-page-intro">
-                    <div>
-                        <div class="technical-mono" style="margin-bottom: 8px;">COLLAPSED BY DEFAULT</div>
-                        <h3>Choose a technical page to expand.</h3>
-                    </div>
-                    <p>Use this menu for edge-to-cloud topology, data collection layers, analytics functions and monitoring equipment details.</p>
+                    <h2>PLATFORM TECHNICAL DETAILS</h2>
+                    <p>Opened from the Architecture dropdown menu for technical review.</p>
                 </div>
 
                 <div class="technical-page" id="technical-topology" hidden>
@@ -1567,42 +1554,59 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const tabs = document.querySelectorAll('.technical-page-tab');
+            const architectureSection = document.getElementById('architecture');
+            const dropdown = document.querySelector('.nav-dropdown');
+            const dropdownTrigger = document.querySelector('.nav-dropdown-trigger');
             const pages = document.querySelectorAll('.technical-page');
-            const intro = document.getElementById('technical-page-intro');
 
             function collapseTechnicalPages() {
-                tabs.forEach(tab => {
-                    tab.classList.remove('active');
-                    tab.setAttribute('aria-expanded', 'false');
-                });
                 pages.forEach(page => {
                     page.hidden = true;
                 });
-                if (intro) intro.hidden = false;
+                if (architectureSection) architectureSection.hidden = true;
+                if (dropdown) dropdown.classList.remove('open');
+                if (dropdownTrigger) dropdownTrigger.setAttribute('aria-expanded', 'false');
             }
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const targetId = tab.getAttribute('data-tech-target');
-                    const targetPage = document.getElementById(targetId);
-                    const isOpen = tab.classList.contains('active');
+            function openTechnicalPage(targetId) {
+                const targetPage = document.getElementById(targetId);
+                if (!architectureSection || !targetPage) return;
 
-                    collapseTechnicalPages();
-                    if (isOpen || !targetPage) return;
+                pages.forEach(page => {
+                    page.hidden = page !== targetPage;
+                });
+                architectureSection.hidden = false;
+                if (dropdown) dropdown.classList.remove('open');
+                if (dropdownTrigger) dropdownTrigger.setAttribute('aria-expanded', 'false');
 
-                    tab.classList.add('active');
-                    tab.setAttribute('aria-expanded', 'true');
-                    targetPage.hidden = false;
-                    if (intro) intro.hidden = true;
+                requestAnimationFrame(() => {
+                    architectureSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
+
+            dropdownTrigger?.addEventListener('click', () => {
+                const isOpen = dropdown?.classList.toggle('open');
+                dropdownTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            document.querySelectorAll('[data-open-tech]').forEach(link => {
+                link.addEventListener('click', event => {
+                    event.preventDefault();
+                    openTechnicalPage(link.getAttribute('data-open-tech'));
                 });
             });
 
             document.querySelectorAll('.technical-page-close').forEach(button => {
                 button.addEventListener('click', () => {
                     collapseTechnicalPages();
-                    document.getElementById('architecture')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
+            });
+
+            document.addEventListener('click', event => {
+                if (!dropdown?.contains(event.target)) {
+                    dropdown?.classList.remove('open');
+                    dropdownTrigger?.setAttribute('aria-expanded', 'false');
+                }
             });
         });
     </script>
