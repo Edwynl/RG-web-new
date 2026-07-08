@@ -40,6 +40,20 @@ body {
     overflow-x: hidden;
 }
 
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: linear-gradient(90deg, transparent, var(--color-porsche-green), transparent);
+    box-shadow: 0 0 18px var(--color-porsche-green-glow);
+    z-index: 2000;
+    pointer-events: none;
+}
+
 /* Base Components */
 .container {
     max-width: 1400px;
@@ -368,6 +382,29 @@ h3 {
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     padding: 30px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.partners-strip::before,
+.partners-strip::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 120px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.partners-strip::before {
+    left: 0;
+    background: linear-gradient(90deg, #f8f9fa 0%, rgba(248,249,250,0) 100%);
+}
+
+.partners-strip::after {
+    right: 0;
+    background: linear-gradient(270deg, #f8f9fa 0%, rgba(248,249,250,0) 100%);
 }
 
 .partners-wrapper {
@@ -376,6 +413,19 @@ h3 {
     align-items: center;
     flex-wrap: wrap;
     gap: 40px;
+}
+
+.partners-wrapper.is-marquee-ready {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    width: max-content;
+    gap: 54px;
+    animation: partners-marquee 34s linear infinite;
+    will-change: transform;
+}
+
+.partners-strip:hover .partners-wrapper.is-marquee-ready {
+    animation-play-state: paused;
 }
 
 .partner-item {
@@ -387,11 +437,23 @@ h3 {
     opacity: 0.4;
     transition: var(--transition-smooth);
     cursor: default;
+    white-space: nowrap;
 }
 
 .partner-item:hover {
     opacity: 1;
     color: var(--color-porsche-green);
+    text-shadow: 0 0 14px rgba(19, 236, 91, 0.22);
+}
+
+@keyframes partners-marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(calc(-50% - 27px));
+    }
 }
 
 /* Leadership Team - 3D Spring Window Edition */
@@ -1012,6 +1074,19 @@ h3 {
     opacity: 1 !important;
 }
 
+.reveal-ready {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+        opacity 0.75s ease var(--reveal-delay, 0ms),
+        transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+}
+
+.reveal-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Technical Library Pagination */
 .technical-library {
     border-top: 1px solid rgba(255,255,255,0.05);
@@ -1193,8 +1268,9 @@ h3 {
     inset: 0;
     background:
         linear-gradient(120deg, rgba(19,236,91,0.11), transparent 42%),
-        radial-gradient(circle at 86% 18%, rgba(255,255,255,0.1), transparent 28%);
+        radial-gradient(circle at var(--panel-glow-x, 86%) var(--panel-glow-y, 18%), rgba(255,255,255,0.14), transparent 30%);
     pointer-events: none;
+    transition: background 0.18s ease;
 }
 
 .product-panel-audit {
@@ -1307,10 +1383,12 @@ h3 {
     border: 1px solid rgba(255,255,255,0.18);
     box-shadow: 0 28px 70px rgba(0,0,0,0.42);
     background: #0b1110;
+    will-change: transform;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
 }
 
 .product-shot-main {
-    transform: rotate(-2deg) translateX(-20px);
+    transform: translate3d(var(--shot-shift-x, 0px), var(--shot-shift-y, 0px), 0) rotate(-2deg) translateX(-20px);
 }
 
 .product-shot-secondary {
@@ -1318,8 +1396,12 @@ h3 {
     width: min(72%, 300px);
     right: 0;
     bottom: 10px;
-    transform: rotate(4deg);
+    transform: translate3d(var(--shot-shift-x-secondary, 0px), var(--shot-shift-y-secondary, 0px), 0) rotate(4deg);
     box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+}
+
+.product-panel:hover .product-shot {
+    box-shadow: 0 34px 82px rgba(0,0,0,0.5);
 }
 
 /* Mobile-first retrofit for inline-style heavy sections */
@@ -1677,7 +1759,7 @@ h3 {
     }
 
     .product-shot-main {
-        transform: rotate(-1.5deg) translateX(-14px);
+        transform: translate3d(var(--shot-shift-x, 0px), var(--shot-shift-y, 0px), 0) rotate(-1.5deg) translateX(-14px);
     }
 
     .product-shot-secondary {
@@ -1717,5 +1799,27 @@ h3 {
         justify-content: center !important;
         text-align: center;
         gap: 12px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+    }
+
+    .reveal-ready {
+        opacity: 1;
+        transform: none;
+    }
+
+    .partners-wrapper.is-marquee-ready {
+        animation: none;
+        flex-wrap: wrap;
+        width: auto;
     }
 }

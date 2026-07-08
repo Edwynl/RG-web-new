@@ -150,6 +150,7 @@
         </nav>
         <button class="btn-metallic" onclick="location.href='#contact'">REQUEST DEMO</button>
     </header>
+    <div class="scroll-progress" aria-hidden="true"></div>
 
     <main>
         <!-- Hero Section -->
@@ -1549,6 +1550,119 @@
             heroSection.addEventListener('mouseleave', () => {
                 mouse.x = null;
                 mouse.y = null;
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const progress = document.querySelector('.scroll-progress');
+
+            function updateScrollProgress() {
+                if (!progress) return;
+                const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                const ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
+                progress.style.transform = `scaleX(${Math.min(1, Math.max(0, ratio))})`;
+            }
+
+            updateScrollProgress();
+            window.addEventListener('scroll', updateScrollProgress, { passive: true });
+            window.addEventListener('resize', updateScrollProgress);
+
+            const partnersWrapper = document.querySelector('.partners-wrapper');
+            if (partnersWrapper && !prefersReducedMotion) {
+                [...partnersWrapper.children].forEach(item => {
+                    const clone = item.cloneNode(true);
+                    clone.setAttribute('aria-hidden', 'true');
+                    partnersWrapper.appendChild(clone);
+                });
+                partnersWrapper.classList.add('is-marquee-ready');
+            }
+
+            const revealTargets = document.querySelectorAll([
+                '.partners-strip',
+                '#about .content-body',
+                '.team-window',
+                '.topology-vault',
+                '.monolith',
+                '.service-card-hover',
+                '.product-panel',
+                '.power-pillar',
+                'section .container > div[style*="grid-template-columns: 1fr 1.1fr"]',
+                '.questionnaire-box'
+            ].join(','));
+
+            revealTargets.forEach((el, index) => {
+                el.classList.add('reveal-ready');
+                el.style.setProperty('--reveal-delay', `${Math.min(index % 6, 5) * 70}ms`);
+            });
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('reveal-in');
+                    revealObserver.unobserve(entry.target);
+                });
+            }, { threshold: 0.14, rootMargin: '0px 0px -60px 0px' });
+
+            revealTargets.forEach(el => revealObserver.observe(el));
+
+            const statEls = [...document.querySelectorAll('.monolith div[style*="font-size: 3.5rem"]')];
+            const statObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting || entry.target.dataset.counted === 'true') return;
+                    const el = entry.target;
+                    const raw = el.textContent.trim();
+                    const match = raw.match(/([\$]?)([\d.]+)(K?)(%?)/);
+                    if (!match || prefersReducedMotion) {
+                        el.dataset.counted = 'true';
+                        return;
+                    }
+                    const prefix = match[1] || '';
+                    const value = Number(match[2]);
+                    const suffix = `${match[3] || ''}${match[4] || ''}`;
+                    const decimals = raw.includes('.') ? 1 : 0;
+                    const start = performance.now();
+                    const duration = 1200;
+
+                    function tick(now) {
+                        const progress = Math.min(1, (now - start) / duration);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        el.textContent = `${prefix}${(value * eased).toFixed(decimals)}${suffix}`;
+                        if (progress < 1) requestAnimationFrame(tick);
+                        else {
+                            el.textContent = raw;
+                            el.dataset.counted = 'true';
+                        }
+                    }
+
+                    requestAnimationFrame(tick);
+                    statObserver.unobserve(el);
+                });
+            }, { threshold: 0.45 });
+
+            statEls.forEach(el => statObserver.observe(el));
+
+            document.querySelectorAll('.product-panel').forEach(panel => {
+                panel.addEventListener('mousemove', event => {
+                    if (prefersReducedMotion) return;
+                    const rect = panel.getBoundingClientRect();
+                    const x = (event.clientX - rect.left) / rect.width - 0.5;
+                    const y = (event.clientY - rect.top) / rect.height - 0.5;
+                    panel.style.setProperty('--panel-glow-x', `${(x + 0.5) * 100}%`);
+                    panel.style.setProperty('--panel-glow-y', `${(y + 0.5) * 100}%`);
+                    panel.style.setProperty('--shot-shift-x', `${x * 18}px`);
+                    panel.style.setProperty('--shot-shift-y', `${y * 14}px`);
+                    panel.style.setProperty('--shot-shift-x-secondary', `${x * -14}px`);
+                    panel.style.setProperty('--shot-shift-y-secondary', `${y * -10}px`);
+                });
+
+                panel.addEventListener('mouseleave', () => {
+                    panel.style.setProperty('--shot-shift-x', '0px');
+                    panel.style.setProperty('--shot-shift-y', '0px');
+                    panel.style.setProperty('--shot-shift-x-secondary', '0px');
+                    panel.style.setProperty('--shot-shift-y-secondary', '0px');
+                });
             });
         });
     </script>
