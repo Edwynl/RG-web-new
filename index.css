@@ -955,6 +955,128 @@ h3 {
     opacity: 1 !important;
 }
 
+/* Technical Library Pagination */
+.technical-library {
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.technical-library-heading {
+    text-align: center;
+    max-width: 820px;
+    margin: 0 auto 44px;
+}
+
+.technical-library-heading h2 {
+    color: white;
+    font-size: 2.22rem;
+    letter-spacing: 4px;
+}
+
+.technical-library-heading p {
+    color: rgba(255,255,255,0.55);
+    margin-top: 18px;
+    line-height: 1.8;
+    font-size: 0.95rem;
+}
+
+.technical-page-menu {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    max-width: 980px;
+    margin: 0 auto 24px;
+}
+
+.technical-page-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 76px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.045);
+    color: rgba(255,255,255,0.74);
+    font-family: inherit;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.technical-page-tab span {
+    color: var(--color-porsche-green);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.72rem;
+}
+
+.technical-page-tab:hover,
+.technical-page-tab.active {
+    border-color: rgba(19,236,91,0.45);
+    background: rgba(19,236,91,0.1);
+    color: white;
+    box-shadow: 0 18px 42px rgba(19,236,91,0.12);
+    transform: translateY(-2px);
+}
+
+.technical-page-intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 26px 30px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.035);
+}
+
+.technical-page-intro h3 {
+    color: white;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+}
+
+.technical-page-intro p {
+    max-width: 520px;
+    color: rgba(255,255,255,0.48);
+    font-size: 0.84rem;
+    line-height: 1.75;
+}
+
+.technical-page {
+    margin-top: 42px;
+    padding-top: 42px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.technical-page[hidden] {
+    display: none;
+}
+
+.technical-page-close {
+    display: block;
+    margin: 0 auto 32px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.65);
+    font-family: inherit;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.technical-page-close:hover {
+    color: white;
+    border-color: rgba(19,236,91,0.45);
+    background: rgba(19,236,91,0.1);
+}
+
 /* Product Suite */
 .product-suite {
     background:
@@ -1204,6 +1326,16 @@ h3 {
         padding: 28px !important;
     }
 
+    .technical-library-heading {
+        margin-bottom: 34px;
+    }
+
+    .technical-page-intro {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
     .product-panel {
         grid-template-columns: 1fr;
         min-height: auto;
@@ -1421,6 +1553,24 @@ h3 {
 
     #services .container>div[style*="grid-template-columns: repeat(3, 1fr)"] {
         grid-template-columns: 1fr !important;
+    }
+
+    .technical-page-menu {
+        grid-template-columns: 1fr;
+    }
+
+    .technical-page-tab {
+        min-height: 64px;
+        font-size: 0.75rem;
+    }
+
+    .technical-page-intro {
+        padding: 22px 18px;
+    }
+
+    .technical-page {
+        margin-top: 30px;
+        padding-top: 30px;
     }
 
     .product-suite-heading {

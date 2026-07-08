@@ -318,16 +318,43 @@
             </div>
         </section>
 
-        <!-- HVAC SYSTEM ARCHITECTURE -->
-        <section id="architecture" class="section-padding bg-malachite-depth"
-            style="padding-top: 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+        <!-- TECHNICAL LIBRARY -->
+        <section id="architecture" class="section-padding bg-malachite-depth technical-library"
+            style="border-bottom: 1px solid rgba(255,255,255,0.05);">
             <div class="container">
-                <div
-                    style="text-align: center; margin-bottom: 80px; padding-top: 120px; border-top: 1px solid rgba(255,255,255,0.05);">
-                    <h2 style="font-size: 2.22rem; letter-spacing: 4px; color: white;">SYSTEM TOPOLOGY</h2>
-                    <p style="opacity: 0.4; font-size: 0.8rem; letter-spacing: 4px; margin-top: 10px;">EDGE TO CLOUD
-                        ORCHESTRATION</p>
+                <div class="technical-library-heading">
+                    <div class="technical-mono" style="text-align:center; margin-bottom: 16px; color: var(--color-porsche-green);">TECHNICAL LIBRARY</div>
+                    <h2>PLATFORM TECHNICAL MENU</h2>
+                    <p>System topology and architecture details are available on demand for technical review without expanding the full engineering documentation on the homepage.</p>
                 </div>
+
+                <div class="technical-page-menu" role="tablist" aria-label="Technical content menu">
+                    <button class="technical-page-tab" type="button" data-tech-target="technical-topology" aria-controls="technical-topology" aria-expanded="false">
+                        <span>01</span>
+                        System Topology
+                    </button>
+                    <button class="technical-page-tab" type="button" data-tech-target="technical-architecture" aria-controls="technical-architecture" aria-expanded="false">
+                        <span>02</span>
+                        System Architecture
+                    </button>
+                </div>
+
+                <div class="technical-page-intro" id="technical-page-intro">
+                    <div>
+                        <div class="technical-mono" style="margin-bottom: 8px;">COLLAPSED BY DEFAULT</div>
+                        <h3>Choose a technical page to expand.</h3>
+                    </div>
+                    <p>Use this menu for edge-to-cloud topology, data collection layers, analytics functions and monitoring equipment details.</p>
+                </div>
+
+                <div class="technical-page" id="technical-topology" hidden>
+                    <div style="text-align: center; margin-bottom: 56px;">
+                        <h2 style="font-size: 2.22rem; letter-spacing: 4px; color: white;">SYSTEM TOPOLOGY</h2>
+                        <p style="opacity: 0.4; font-size: 0.8rem; letter-spacing: 4px; margin-top: 10px;">EDGE TO CLOUD
+                            ORCHESTRATION</p>
+                    </div>
+
+                    <button class="technical-page-close" type="button">COLLAPSE TECHNICAL PAGE</button>
 
                 <div class="topology-vault">
                     <div class="device-node">
@@ -369,18 +396,16 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-
-        <!-- PLATFORM ARCHITECTURE -->
-        <section class="section-padding bg-malachite-depth" style="border-top: 1px solid rgba(255,255,255,0.05);">
-            <div class="container">
-                <div style="text-align: center; margin-bottom: 80px;">
-                    <div class="technical-mono" style="text-align:center; margin-bottom: 16px; color: var(--color-porsche-green);">PLATFORM INTELLIGENCE</div>
-                    <h2 style="font-size: 2.22rem; letter-spacing: 4px; color: white;">SYSTEM ARCHITECTURE</h2>
-                    <p style="opacity: 0.4; font-size: 0.8rem; letter-spacing: 4px; margin-top: 10px;">END-TO-END ENERGY INTELLIGENCE STACK</p>
                 </div>
+
+                <div class="technical-page" id="technical-architecture" hidden>
+                    <div style="text-align: center; margin-bottom: 56px;">
+                        <div class="technical-mono" style="text-align:center; margin-bottom: 16px; color: var(--color-porsche-green);">PLATFORM INTELLIGENCE</div>
+                        <h2 style="font-size: 2.22rem; letter-spacing: 4px; color: white;">SYSTEM ARCHITECTURE</h2>
+                        <p style="opacity: 0.4; font-size: 0.8rem; letter-spacing: 4px; margin-top: 10px;">END-TO-END ENERGY INTELLIGENCE STACK</p>
+                    </div>
+
+                    <button class="technical-page-close" type="button">COLLAPSE TECHNICAL PAGE</button>
 
                 <div style="display: flex; flex-direction: column; gap: 3px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
 
@@ -508,6 +533,7 @@
                         </div>
                     </div>
 
+                </div>
                 </div>
             </div>
         </section>
@@ -1536,6 +1562,47 @@
             heroSection.addEventListener('mouseleave', () => {
                 mouse.x = null;
                 mouse.y = null;
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.technical-page-tab');
+            const pages = document.querySelectorAll('.technical-page');
+            const intro = document.getElementById('technical-page-intro');
+
+            function collapseTechnicalPages() {
+                tabs.forEach(tab => {
+                    tab.classList.remove('active');
+                    tab.setAttribute('aria-expanded', 'false');
+                });
+                pages.forEach(page => {
+                    page.hidden = true;
+                });
+                if (intro) intro.hidden = false;
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetId = tab.getAttribute('data-tech-target');
+                    const targetPage = document.getElementById(targetId);
+                    const isOpen = tab.classList.contains('active');
+
+                    collapseTechnicalPages();
+                    if (isOpen || !targetPage) return;
+
+                    tab.classList.add('active');
+                    tab.setAttribute('aria-expanded', 'true');
+                    targetPage.hidden = false;
+                    if (intro) intro.hidden = true;
+                });
+            });
+
+            document.querySelectorAll('.technical-page-close').forEach(button => {
+                button.addEventListener('click', () => {
+                    collapseTechnicalPages();
+                    document.getElementById('architecture')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
             });
         });
     </script>
