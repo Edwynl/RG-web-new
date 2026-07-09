@@ -1404,6 +1404,167 @@ h3 {
     box-shadow: 0 34px 82px rgba(0,0,0,0.5);
 }
 
+/* Edge AI Platform */
+.edge-platform-section {
+    background: linear-gradient(180deg, var(--color-chalk) 0%, #ffffff 100%);
+    border-top: 1px solid rgba(44,62,53,0.08);
+}
+
+.edge-platform-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.78fr) minmax(520px, 1.22fr);
+    gap: 42px;
+    align-items: center;
+    padding: 56px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #07100f 0%, var(--color-deep-sage) 58%, #081211 100%);
+    border: 1px solid rgba(19,236,91,0.16);
+    box-shadow: 0 30px 80px rgba(30,49,46,0.24);
+    position: relative;
+    overflow: hidden;
+}
+
+.edge-platform-layout::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 78% 20%, rgba(19,236,91,0.15), transparent 32%),
+        linear-gradient(120deg, rgba(19,236,91,0.08), transparent 46%);
+    pointer-events: none;
+}
+
+.edge-platform-copy,
+.edge-platform-visual {
+    position: relative;
+    z-index: 1;
+}
+
+.edge-platform-copy h2 {
+    color: white;
+    font-size: clamp(2.3rem, 5vw, 4.6rem);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    margin-bottom: 24px;
+}
+
+.edge-platform-copy p {
+    color: rgba(255,255,255,0.68);
+    font-size: 0.98rem;
+    line-height: 1.9;
+    max-width: 560px;
+}
+
+.edge-platform-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 34px;
+}
+
+.edge-platform-visual {
+    margin: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: #020807;
+    box-shadow: 0 28px 70px rgba(0,0,0,0.46);
+}
+
+.edge-platform-visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: scale(1.01);
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), filter 0.65s ease;
+}
+
+.edge-platform-layout:hover .edge-platform-visual img {
+    transform: scale(1.035);
+    filter: saturate(1.08) brightness(1.04);
+}
+
+.edge-environments,
+.edge-benefits {
+    display: grid;
+    border: 1px solid rgba(44,62,53,0.1);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.64);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 18px 46px rgba(30,49,46,0.08);
+}
+
+.edge-environments {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    margin-top: 18px;
+    overflow: hidden;
+}
+
+.edge-environments div {
+    min-height: 86px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    text-align: center;
+    color: var(--color-deep-sage);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-right: 1px solid rgba(44,62,53,0.1);
+    transition: var(--transition-smooth);
+}
+
+.edge-environments div:last-child {
+    border-right: none;
+}
+
+.edge-environments div:hover {
+    color: var(--color-porsche-green);
+    background: rgba(19,236,91,0.08);
+}
+
+.edge-benefits {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: 16px;
+    overflow: hidden;
+}
+
+.edge-benefits div {
+    min-height: 150px;
+    padding: 28px;
+    border-right: 1px solid rgba(44,62,53,0.1);
+}
+
+.edge-benefits div:last-child {
+    border-right: none;
+}
+
+.edge-benefits span {
+    display: block;
+    color: var(--color-porsche-green);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+}
+
+.edge-benefits strong {
+    display: block;
+    color: var(--color-deep-sage);
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.edge-benefits p {
+    color: var(--color-titanium);
+    opacity: 0.72;
+    font-size: 0.82rem;
+    line-height: 1.65;
+}
+
 /* Mobile-first retrofit for inline-style heavy sections */
 @media (max-width: 1024px) {
     .section-padding {
@@ -1488,6 +1649,43 @@ h3 {
 
     .product-shot-stack {
         min-height: 500px;
+    }
+
+    .edge-platform-layout {
+        grid-template-columns: 1fr;
+        padding: 40px;
+    }
+
+    .edge-platform-copy p {
+        max-width: 720px;
+    }
+
+    .edge-environments {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .edge-environments div {
+        border-bottom: 1px solid rgba(44,62,53,0.1);
+    }
+
+    .edge-environments div:nth-child(3n) {
+        border-right: none;
+    }
+
+    .edge-environments div:nth-last-child(-n+3) {
+        border-bottom: none;
+    }
+
+    .edge-benefits {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .edge-benefits div:nth-child(2n) {
+        border-right: none;
+    }
+
+    .edge-benefits div:nth-child(-n+2) {
+        border-bottom: 1px solid rgba(44,62,53,0.1);
     }
 
     .arch-layer {
@@ -1766,6 +1964,51 @@ h3 {
         width: min(60vw, 240px);
         right: -6px;
         bottom: 26px;
+    }
+
+    .edge-platform-layout {
+        padding: 28px 18px;
+        gap: 28px;
+    }
+
+    .edge-platform-copy h2 {
+        font-size: 2.25rem;
+    }
+
+    .edge-platform-copy p {
+        font-size: 0.9rem;
+        line-height: 1.75;
+    }
+
+    .edge-platform-actions .btn-metallic {
+        width: 100%;
+    }
+
+    .edge-environments,
+    .edge-benefits {
+        grid-template-columns: 1fr;
+    }
+
+    .edge-environments div,
+    .edge-benefits div {
+        min-height: auto;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(44,62,53,0.1) !important;
+    }
+
+    .edge-environments div:last-child,
+    .edge-benefits div:last-child {
+        border-bottom: none !important;
+    }
+
+    .edge-environments div {
+        justify-content: flex-start;
+        min-height: 62px;
+        text-align: left;
+    }
+
+    .edge-benefits div {
+        padding: 22px;
     }
 
     .power-pillar {
