@@ -146,6 +146,7 @@
                     </div>
                 </li>
                 <li><a href="#plans" class="nav-pill">PLANS</a></li>
+                <li><a href="#payment" class="nav-pill">PAYMENT</a></li>
                 <li><a href="#contact" class="nav-pill">CONTACT</a></li>
             </ul>
         </nav>
@@ -1348,6 +1349,45 @@
         </section>
 
 
+        <!-- SECURE PAYMENT -->
+        <section class="section-padding rg-payment-section" id="payment">
+            <div class="container">
+                <div class="rg-payment-layout">
+                    <div class="rg-payment-copy">
+                        <div class="technical-mono">SECURE ONLINE PAYMENT</div>
+                        <h2>PAY AGREED <span class="accent-porsche-green">PROJECT FEES</span></h2>
+                        <p>Use this secure PayPal checkout for agreed deposits, technical audits, data collection support or custom project invoices. Enter the amount shown on your quote or invoice before continuing.</p>
+                        <ul class="rg-payment-points">
+                            <li>No fixed price in the website code</li>
+                            <li>Amount is entered per project or invoice</li>
+                            <li>PayPal processes card and wallet payments securely</li>
+                        </ul>
+                    </div>
+
+                    <div class="rg-payment-card" data-paypal-client-id="AdQJASdf9-G7BEdTjskCC44HAC2Xu6rZ1kiZW9H8MSolwwro4Yq81iudX5ScfbLM-e1vOKmuDaUoepq9" data-currency="AUD">
+                        <label for="rgPaymentItem">Payment type</label>
+                        <select id="rgPaymentItem">
+                            <option value="Retragreen project payment">Project payment</option>
+                            <option value="Technical audit deposit">Technical audit deposit</option>
+                            <option value="Data collection support">Data collection support</option>
+                            <option value="HVAC AI opportunity scan">HVAC AI opportunity scan</option>
+                            <option value="Custom invoice payment">Custom invoice payment</option>
+                        </select>
+
+                        <label for="rgPaymentAmount">Amount (AUD)</label>
+                        <input id="rgPaymentAmount" type="number" min="1" step="0.01" inputmode="decimal" placeholder="Enter agreed amount">
+
+                        <label for="rgPaymentReference">Invoice or project reference</label>
+                        <input id="rgPaymentReference" type="text" maxlength="80" placeholder="Optional, e.g. INV-1024">
+
+                        <button type="button" class="btn-metallic rg-payment-prepare" id="rgPaymentPrepare">PREPARE PAYPAL CHECKOUT</button>
+                        <div id="rgPaypalButtons" class="rg-paypal-buttons"></div>
+                        <p id="rgPaymentStatus" class="rg-payment-status">Enter the agreed amount to show the PayPal checkout button.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Technical Questionnaire -->
         <section class="section-padding bg-malachite-depth" id="contact"
             style="border-top: 1px solid rgba(255,255,255,0.05);">
@@ -1945,5 +1985,6 @@
             }
         }
     </script>
+    <script src="payment.js"></script>
 </body>
 </html>

@@ -2372,3 +2372,140 @@ h3 {
         width: auto;
     }
 }
+/* ============ Reusable PayPal Payment Section ============ */
+.rg-payment-section {
+    background:
+        radial-gradient(circle at 12% 20%, rgba(19, 236, 91, 0.12), transparent 32%),
+        linear-gradient(135deg, #0f1d17 0%, #1d3128 52%, #07110d 100%);
+    color: white;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.rg-payment-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
+    gap: 56px;
+    align-items: center;
+}
+
+.rg-payment-copy h2 {
+    margin: 18px 0 20px;
+    max-width: 720px;
+    color: white;
+    font-size: clamp(2.3rem, 6vw, 4.8rem);
+    line-height: 0.95;
+    font-weight: 300;
+    letter-spacing: -2px;
+}
+
+.rg-payment-copy p {
+    max-width: 620px;
+    color: rgba(255,255,255,0.68);
+    line-height: 1.85;
+}
+
+.rg-payment-points {
+    display: grid;
+    gap: 12px;
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rg-payment-points li {
+    position: relative;
+    padding-left: 26px;
+    color: rgba(255,255,255,0.78);
+    font-size: 0.92rem;
+}
+
+.rg-payment-points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-porsche-green);
+    box-shadow: 0 0 18px rgba(19,236,91,0.45);
+}
+
+.rg-payment-card {
+    display: grid;
+    gap: 14px;
+    padding: 28px;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 24px;
+    background: rgba(255,255,255,0.07);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.14);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+}
+
+.rg-payment-card label {
+    color: rgba(255,255,255,0.62);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+}
+
+.rg-payment-card input,
+.rg-payment-card select {
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    padding: 12px 14px;
+    color: white;
+    background: rgba(0,0,0,0.18);
+    font: inherit;
+    outline: none;
+}
+
+.rg-payment-card select option {
+    color: #15231c;
+}
+
+.rg-payment-card input:focus,
+.rg-payment-card select:focus {
+    border-color: rgba(19,236,91,0.55);
+    box-shadow: 0 0 0 3px rgba(19,236,91,0.10);
+}
+
+.rg-payment-prepare {
+    width: 100%;
+    margin-top: 6px;
+}
+
+.rg-paypal-buttons {
+    min-height: 48px;
+}
+
+.rg-payment-status {
+    min-height: 22px;
+    margin: 0;
+    color: rgba(255,255,255,0.62);
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+.rg-payment-status.success {
+    color: var(--color-porsche-green);
+}
+
+.rg-payment-status.error {
+    color: #ffaaa9;
+}
+
+@media (max-width: 860px) {
+    .rg-payment-layout {
+        grid-template-columns: 1fr;
+        gap: 34px;
+    }
+
+    .rg-payment-card {
+        padding: 22px;
+    }
+}
