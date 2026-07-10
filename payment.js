@@ -2,13 +2,14 @@
     const cards = document.querySelectorAll('.rg-payment-card');
     const loadedCurrencies = new Map();
 
-    function loadPayPalSdk(clientId, currency) {
-        const key = `${clientId}:${currency}`;
+    function loadPayPalSdk(clientId, currency, locale) {
+        const key = `${clientId}:${currency}:${locale}`;
         if (loadedCurrencies.has(key)) return loadedCurrencies.get(key);
 
         const params = new URLSearchParams({
             'client-id': clientId,
             currency,
+            locale,
             intent: 'capture',
             components: 'buttons'
         });
@@ -40,6 +41,7 @@
     function initPaymentCard(card) {
         const clientId = card.dataset.paypalClientId;
         const currency = card.dataset.currency || 'AUD';
+        const locale = card.dataset.paypalLocale || 'en_AU';
         const itemSelect = card.querySelector('#rgPaymentItem');
         const amountInput = card.querySelector('#rgPaymentAmount');
         const referenceInput = card.querySelector('#rgPaymentReference');
@@ -61,7 +63,7 @@
             setStatus(status, 'Loading PayPal checkout...', null);
 
             try {
-                await loadPayPalSdk(clientId, currency);
+                await loadPayPalSdk(clientId, currency, locale);
 
                 window.paypal.Buttons({
                     style: {
