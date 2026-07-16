@@ -3,6 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
+    <script>
+        (function () {
+            var canonicalHost = 'www.retragreen.com.au';
+            if (/\.vercel\.app$/i.test(window.location.hostname)) {
+                window.location.replace(
+                    'https://' + canonicalHost + window.location.pathname + window.location.search + window.location.hash
+                );
+            }
+        })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Retragreen | Precision Building Intelligence</title>
     <link rel="stylesheet" href="index.css">
