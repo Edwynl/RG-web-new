@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(?<host>.*)\\.vercel\\.app"
+        }
+      ],
+      "destination": "https://www.retragreen.com.au/:path*",
+      "permanent": true
+    }
+  ]
+}
